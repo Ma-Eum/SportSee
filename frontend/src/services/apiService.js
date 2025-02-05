@@ -24,10 +24,10 @@ export const getUserData = async (userId) => {
  */
 export const getUserActivity = async (userId) => {
     try {
-        const response = await axios.get(`${BASE_URL}/user/${userId}/activity`);
+        const response = await axios.get(`${BASE_URL}/user/${userId}/average-sessions`);
         return response.data.data;
     } catch (error) {
-        console.error("Erreur lors de la récupération des activités :", error);
+        console.error("Erreur lors de la récupération des sessions moyennes :", error);
         return null;
     }
 };
