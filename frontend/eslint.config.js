@@ -33,6 +33,8 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
+      // Ajout des nouvelles règles
+      "react/react-in-jsx-scope": "off", // Désactive l'obligation d'importer React
     },
   },
 ]
