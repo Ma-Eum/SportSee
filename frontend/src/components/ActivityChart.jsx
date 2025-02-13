@@ -6,9 +6,9 @@ const ActivityChart = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        getUserActivity(12).then((activityData) => {
+        getUserActivity().then((activityData) => { // ✅ Suppression du `userId`
             if (activityData) {
-                setData(activityData.sessions);
+                setData(activityData);
             }
         });
     }, []);

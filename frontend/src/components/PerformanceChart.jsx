@@ -7,17 +7,15 @@ const PerformanceChart = () => {
     const [performance, setPerformance] = useState(null);
 
     useEffect(() => {
-        getUserPerformance(12).then((data) => {
+        getUserPerformance().then((data) => { // ✅ Suppression du `userId`
             if (data) {
                 setPerformance(data);
             }
         });
     }, []);
 
-    // Vérifier que les données existent
     if (!performance) return <p>Chargement...</p>;
 
-    // Mapper les données pour les afficher correctement
     const categories = {
         1: "Cardio",
         2: "Énergie",

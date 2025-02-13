@@ -6,9 +6,9 @@ const AverageSessionsChart = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        getUserAverageSessions(12).then((sessionData) => {
+        getUserAverageSessions().then((sessionData) => { // ✅ Suppression du `userId`
             if (sessionData) {
-                setData(sessionData.sessions);
+                setData(sessionData);
             }
         });
     }, []);

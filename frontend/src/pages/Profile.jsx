@@ -3,17 +3,19 @@ import { getUserData } from "../services/apiService";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import AverageSessionsChart from "../components/AverageSessionsChart";
 import ActivityChart from "../components/ActivityChart";
-import PerformanceChart from "../components/PerformanceChart"; // 🔥 Ajout du bon import
+import PerformanceChart from "../components/PerformanceChart"; 
 
 const Profile = () => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        getUserData(12).then((data) => {
+        console.log("🔄 Tentative de récupération des données utilisateur...");
+        getUserData().then((data) => { // ✅ Suppression du `userId`
+            console.log("✅ Données reçues :", data);
             if (data) {
                 setUser(data);
             }
-        });
+        }).catch(error => console.error("❌ Erreur lors de la récupération des données :", error));
     }, []);
 
     return (
@@ -25,7 +27,6 @@ const Profile = () => {
                         <p>Âge : {user.userInfos.age} ans</p>
                         <p>Calories brûlées : {user.keyData.calorieCount}</p>
                         <p>Félicitations ! Vous avez explosé vos objectifs hier 🎉</p>
-
 
                         {/* Graphique des activités */}
                         <ActivityChart />
