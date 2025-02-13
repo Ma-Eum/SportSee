@@ -13,13 +13,27 @@
     justify-content: space-between;
     padding: 20px 0;
 
-    ul {
-        list-style: none;
-        padding: 0;
+    nav {
+        ul {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+
+            li {
+                list-style: none;
+
+                img {
+                    width: 50px; // ✅ Taille uniforme des icônes
+                    height: 50px;
+                }
+            }
+        }
     }
 
-    img {
-        width: 40px;
-        margin: 10px 0;
+    p {
+        font-size: 12px;
+        transform: rotate(-90deg);
+        white-space: nowrap;
     }
 }

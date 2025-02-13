@@ -1,0 +1,39 @@
+@import "../_variables";
+
+.nutrition-card {
+    display: flex;
+    align-items: center;
+    background-color: $background-gray;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    gap: 15px;
+
+    .nutrition-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .nutrition-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .nutrition-value {
+        font-size: 20px;
+        font-weight: bold;
+        color: $background-light;
+    }
+
+    .nutrition-type {
+        color: $secondary-color; // ✅ Utilisation de la variable pour #74798C
+        font-size: 14px;
+    }    
+
+    .nutrition-label {
+        font-size: 14px;
+        color: #74798C;
+    }
+}

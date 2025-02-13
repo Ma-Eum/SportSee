@@ -10,6 +10,10 @@
     color: white;
     padding: 20px;
 
+    .logo {
+        height: 50px; // ✅ Ajuste la taille du logo
+    }
+    
     ul {
         list-style: none;
         display: flex;

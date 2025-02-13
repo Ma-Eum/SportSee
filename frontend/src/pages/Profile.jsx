@@ -4,7 +4,15 @@ import DashboardLayout from "../components/layout/DashboardLayout";
 import AverageSessionsChart from "../components/AverageSessionsChart";
 import ActivityChart from "../components/ActivityChart";
 import PerformanceChart from "../components/PerformanceChart"; 
-import ScoreChart from "../components/ScoreChart"; 
+import ScoreChart from "../components/ScoreChart";
+import NutritionCard from "../components/NutritionCard";
+
+import caloriesIcon from "../assets/images/calories-icon.png";
+import proteinIcon from "../assets/images/protein-icon.png";
+import carbsIcon from "../assets/images/carbs-icon.png";
+import fatIcon from "../assets/images/fat-icon.png";
+
+import "../styles/pages/profile.scss"; // 🔥 Import du bon style
 
 const Profile = () => {
     const [user, setUser] = useState(null);
@@ -25,21 +33,28 @@ const Profile = () => {
                 {user ? (
                     <>
                         <h1>Bonjour <span className="user-name">{user.userInfos.firstName}</span> !</h1>
-                        <p>Âge : {user.userInfos.age} ans</p>
-                        <p>Calories brûlées : {user.keyData.calorieCount}</p>
-                        <p>Félicitations ! Vous avez explosé vos objectifs hier 🎉</p>
+                        <p className="congrats-message">Félicitations ! Vous avez explosé vos objectifs hier 🎉</p>
 
-                        {/* Graphique des activités */}
-                        <ActivityChart />
-                        
-                        {/* Graphique des sessions moyennes */}
-                        <AverageSessionsChart />
-                        
-                        {/* Graphique de performance */}
-                        <PerformanceChart />
-                        
-                        {/* Graphique de ScoreChart */}
-                        <ScoreChart  />
+                        <div className="dashboard-container">
+                            {/* 🟥 Graphiques Principaux */}
+                            <div className="charts-container">
+                                <ActivityChart />
+                                <div className="charts-bottom">
+                                    <AverageSessionsChart />
+                                    <PerformanceChart />
+                                    <ScoreChart score={user.todayScore} />
+                                </div>
+                            </div>
+
+                            {/* 🟦 Cartes Infos Clés à droite */}
+                            <div className="key-info-container">
+                                <NutritionCard type="Calories" value={user.keyData.calorieCount} unit="kCal" icon={caloriesIcon} />
+                                <NutritionCard type="Protéines" value={user.keyData.proteinCount} unit="g" icon={proteinIcon} />
+                                <NutritionCard type="Glucides" value={user.keyData.carbohydrateCount} unit="g" icon={carbsIcon} />
+                                <NutritionCard type="Lipides" value={user.keyData.lipidCount} unit="g" icon={fatIcon} />
+                            </div>
+
+                        </div>
                     </>
                 ) : (
                     <p>Chargement des données...</p>

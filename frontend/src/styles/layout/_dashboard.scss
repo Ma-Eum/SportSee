@@ -13,7 +13,10 @@
     }
 
     .dashboard-main {
-        flex: 1;
+
+        background-color: #FFFFFF; // Définir le fond en blanc
         padding: 20px;
+        border-radius: 10px; // Facultatif, si tu veux des bords arrondis
+        width: 100%;
     }
 }

@@ -1,0 +1,50 @@
+.profile {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.profile h1 {
+    color: #000000; // Noir
+    font-size: 48px; // Taille du texte (ajuste selon ton besoin)
+    font-weight: Medium;
+}
+
+
+.user-name {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.congrats-message {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+/* 📌 Conteneur Principal */
+.dashboard-container {
+    display: flex;
+    gap: 2rem;
+}
+
+/* 📊 Zone des Graphiques */
+.charts-container {
+    flex: 2; 
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.charts-bottom {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+}
+
+/* 🟦 Section des Cartes d'Infos à droite */
+.key-info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 250px;
+}

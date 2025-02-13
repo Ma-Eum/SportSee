@@ -1,9 +1,10 @@
 import "../../styles/layout/_header.scss";
+import logo from "../../assets/images/logo.png"; // ✅ Import du logo
 
 const Header = () => {
     return (
         <header className="header">
-            <h1>SportSee</h1>
+            <img src={logo} alt="SportSee" className="logo" /> {/* ✅ Ajout du logo */}
             <nav>
                 <ul>
                     <li>Accueil</li>
