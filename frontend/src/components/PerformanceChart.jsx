@@ -32,6 +32,7 @@ const PerformanceChart = () => {
 
     return (
         <div className="performance-chart">
+            <h2>Performances</h2>
             <ResponsiveContainer width="100%" height={250}>
                 <RadarChart outerRadius={90} data={formattedData}>
                     <PolarGrid />

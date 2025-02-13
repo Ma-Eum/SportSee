@@ -4,6 +4,7 @@ import DashboardLayout from "../components/layout/DashboardLayout";
 import AverageSessionsChart from "../components/AverageSessionsChart";
 import ActivityChart from "../components/ActivityChart";
 import PerformanceChart from "../components/PerformanceChart"; 
+import ScoreChart from "../components/ScoreChart"; 
 
 const Profile = () => {
     const [user, setUser] = useState(null);
@@ -36,6 +37,9 @@ const Profile = () => {
                         
                         {/* Graphique de performance */}
                         <PerformanceChart />
+                        
+                        {/* Graphique de ScoreChart */}
+                        <ScoreChart  />
                     </>
                 ) : (
                     <p>Chargement des données...</p>
