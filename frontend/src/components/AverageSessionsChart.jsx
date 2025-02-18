@@ -69,7 +69,7 @@ CustomTooltip.propTypes = {
                     data={data}
                     onMouseMove={(e) => setHoverIndex(e.activeTooltipIndex)}
                     onMouseLeave={() => setHoverIndex(null)}
-                    margin={{ top: 50, right: 15, left: 15, bottom: 15 }}
+                    margin={{ top: 50, right: 0, left: 0, bottom: 15 }}
                 >
                     {/* ✅ Définition du dégradé */}
                     <defs>
@@ -89,9 +89,11 @@ CustomTooltip.propTypes = {
                         dataKey="day"
                         tickFormatter={(day) => days[day - 1]}
                         className="x-axis"
-                        tick={{ fill: "white" }} // ✅ Applique aussi la couleur en dur pour éviter d'éventuels conflits
+                        tick={{ fill: "white",textAnchor: "middle" }} // ✅ Applique aussi la couleur en dur pour éviter d'éventuels conflits + Centre chaque tick
                         axisLine={false} // ❌ Supprime la ligne de l'axe
                         tickLine={false} // ❌ Supprime les petites lignes des ticks
+                        tickMargin={0} // ✅ Ajuste l'espace entre les ticks et la ligne
+                        interval="preserveStartEnd" // ✅ S'assure qu'ils restent bien placés
                     />
 
                     <Tooltip content={<CustomTooltip />} cursor={false} />

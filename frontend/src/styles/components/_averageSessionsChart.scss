@@ -3,7 +3,8 @@
 .average-sessions-chart {
     background: $red;
     border-radius: 10px;
-    padding: 20px;
+    padding: 0; // ✅ Supprime tout padding
+    margin: 0; // ✅ Supprime tout margin
     color: $white;
     position: relative;
     width: 100%;
@@ -20,7 +21,7 @@
         left: 20px;
         font-size: 16px;
         font-weight: 500;
-        color: rgba(255, 255, 255, 0.8);
+        color: rgba(255, 255, 255, 0.5);
     }
 
     .x-axis {
@@ -79,23 +80,30 @@
     &.active-5 .background-gradient { left: 69%; opacity: 1; }
     &.active-6 .background-gradient { left: 81%; opacity: 1; }
 
-    // ✅ Supprime la ligne de séparation de l'axe X
-    .recharts-cartesian-axis-line {
+    // ✅ Supprime complètement la ligne de séparation et les ticks de l'axe X
+    .recharts-cartesian-axis-line,
+    .recharts-cartesian-axis-tick-line {
         display: none !important;
     }
 
-    // ✅ Supprime les petites lignes des ticks
-    .recharts-cartesian-axis-tick-line {
-        display: none !important;
+    // ✅ Ajoute un padding de 14px uniquement à l'axe X sans affecter la courbe
+    .recharts-cartesian-axis.recharts-xAxis {
+        transform: translateX(14px); // ✅ Décale uniquement l'axe X sans toucher à la courbe
+        width: calc(100% - 29px) !important; // ✅ Réduit la largeur pour équilibrer les marges
+    }
+
+    .recharts-cartesian-axis-ticks {
+        text-anchor: middle !important; // ✅ Centre chaque texte sous son point
     }
 
     // ✅ Change la couleur du texte des ticks en blanc
     .recharts-text.recharts-cartesian-axis-tick-value {
         fill: rgba(255, 255, 255, 0.8)!important;
+        font-size: 12px;
     }
 
-    /* ✅ Ajuster le conteneur du graphique */
-    .recharts-wrapper {
-        height: 100%;
+    // ✅ Assure que la courbe prend toute la largeur du conteneur sans margin ni padding
+    .recharts-wrapper, .recharts-surface {
+    width: 100% !important;
     }
 }
