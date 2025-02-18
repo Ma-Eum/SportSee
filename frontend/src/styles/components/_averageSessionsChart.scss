@@ -1,0 +1,86 @@
+@import "../_variables"; // ✅ Import des couleurs globales
+
+.average-sessions-chart {
+    background: $red;
+    border-radius: 10px;
+    padding: 20px;
+    color: $white;
+    position: relative;
+    width: 100%;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: background 0.3s ease-in-out;
+
+    h2 {
+        position: absolute;
+        top: 15px;
+        left: 20px;
+        font-size: 16px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .x-axis {
+        fill: $white !important;
+        opacity: 0.7;
+        font-size: 14px;
+    }
+
+    .custom-tooltip {
+        background: $white;
+        color: $black;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    .recharts-cartesian-grid line {
+        display: none; // ❌ Supprime les grilles
+    }
+
+    /* ✅ Ajoute un dégradé dynamique sur la ligne */
+    .recharts-line .recharts-line-curve {
+        stroke: url(#opacityGradient) !important;
+        stroke-width: 2.5px !important;
+    }
+
+    /* ✅ Met en valeur le point actif avec une bordure blanche transparente */
+    .recharts-active-dot circle {
+        fill: $white !important;
+        stroke: rgba(255, 255, 255, 0.3) !important; /* 💙 Bordure blanche transparente */
+        stroke-width: 15px !important; /* ✅ Épaisseur de la bordure */
+        r: 6px; /* ✅ Taille du point */
+    }
+
+    /* ✅ Dégradé sur toute la hauteur */
+    .background-gradient {
+        position: absolute;
+        top: 0;
+        left: 100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to right, rgba(0, 0, 0, 0) 4%, rgba(0, 0, 0, 0.212) 0%);
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out, left 0.3s ease-in-out;
+    }
+
+    /* ✅ Afficher le dégradé uniquement lorsqu'un point est actif */
+    &.active-0 .background-gradient { left: 2%; opacity: 1; }
+    &.active-1 .background-gradient { left: 17%; opacity: 1; }
+    &.active-2 .background-gradient { left: 31%; opacity: 1; }
+    &.active-3 .background-gradient { left: 46%; opacity: 1; }
+    &.active-4 .background-gradient { left: 61%; opacity: 1; }
+    &.active-5 .background-gradient { left: 75%; opacity: 1; }
+    &.active-6 .background-gradient { left: 90%; opacity: 1; }
+
+    /* ✅ Ajuster le conteneur du graphique */
+    .recharts-wrapper {
+        height: 100%;
+    }
+}
