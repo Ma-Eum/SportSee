@@ -33,7 +33,7 @@ CustomTooltip.propTypes = {
     ),
 };
 
-const AverageSessionsChart = () => {
+    const AverageSessionsChart = () => {
     const [data, setData] = useState([]);
     const [hoverIndex, setHoverIndex] = useState(null); // 🔥 Suivi du point actif
 
@@ -89,6 +89,9 @@ const AverageSessionsChart = () => {
                         dataKey="day"
                         tickFormatter={(day) => days[day - 1]}
                         className="x-axis"
+                        tick={{ fill: "white" }} // ✅ Applique aussi la couleur en dur pour éviter d'éventuels conflits
+                        axisLine={false} // ❌ Supprime la ligne de l'axe
+                        tickLine={false} // ❌ Supprime les petites lignes des ticks
                     />
 
                     <Tooltip content={<CustomTooltip />} cursor={false} />

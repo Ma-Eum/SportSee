@@ -79,6 +79,21 @@
     &.active-5 .background-gradient { left: 69%; opacity: 1; }
     &.active-6 .background-gradient { left: 81%; opacity: 1; }
 
+    // ✅ Supprime la ligne de séparation de l'axe X
+    .recharts-cartesian-axis-line {
+        display: none !important;
+    }
+
+    // ✅ Supprime les petites lignes des ticks
+    .recharts-cartesian-axis-tick-line {
+        display: none !important;
+    }
+
+    // ✅ Change la couleur du texte des ticks en blanc
+    .recharts-text.recharts-cartesian-axis-tick-value {
+        fill: rgba(255, 255, 255, 0.8)!important;
+    }
+
     /* ✅ Ajuster le conteneur du graphique */
     .recharts-wrapper {
         height: 100%;
