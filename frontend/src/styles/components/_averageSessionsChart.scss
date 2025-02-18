@@ -44,7 +44,7 @@
 
     /* ✅ Ajoute un dégradé dynamique sur la ligne */
     .recharts-line .recharts-line-curve {
-        stroke: url(#opacityGradient) !important;
+        stroke: url(#dynamicOpacityGradient) !important;
         stroke-width: 2.5px !important;
     }
 
@@ -63,7 +63,7 @@
         left: 100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(to right, rgba(0, 0, 0, 0) 4%, rgba(0, 0, 0, 0.212) 0%);
+        background: linear-gradient(to right, rgba(0, 0, 0, 0) 4%, hwb(0 0% 100% / 0.122) 0%);
         z-index: 1;
         pointer-events: none;
         opacity: 0;
@@ -71,13 +71,13 @@
     }
 
     /* ✅ Afficher le dégradé uniquement lorsqu'un point est actif */
-    &.active-0 .background-gradient { left: 2%; opacity: 1; }
-    &.active-1 .background-gradient { left: 17%; opacity: 1; }
-    &.active-2 .background-gradient { left: 31%; opacity: 1; }
+    &.active-0 .background-gradient { left: 10%; opacity: 1; }
+    &.active-1 .background-gradient { left: 22%; opacity: 1; }
+    &.active-2 .background-gradient { left: 35%; opacity: 1; }
     &.active-3 .background-gradient { left: 46%; opacity: 1; }
-    &.active-4 .background-gradient { left: 61%; opacity: 1; }
-    &.active-5 .background-gradient { left: 75%; opacity: 1; }
-    &.active-6 .background-gradient { left: 90%; opacity: 1; }
+    &.active-4 .background-gradient { left: 58%; opacity: 1; }
+    &.active-5 .background-gradient { left: 69%; opacity: 1; }
+    &.active-6 .background-gradient { left: 81%; opacity: 1; }
 
     /* ✅ Ajuster le conteneur du graphique */
     .recharts-wrapper {

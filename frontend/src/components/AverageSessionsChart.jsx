@@ -45,6 +45,18 @@ const AverageSessionsChart = () => {
         });
     }, []);
 
+    // 🔥 Calcul dynamique du dégradé
+    const gradientId = "dynamicOpacityGradient";
+    const gradientStops = hoverIndex === null 
+    ? [
+        { offset: "100%", opacity: "0.5" }
+    ]
+    : [
+        { offset: "0%", opacity: "0.4" }, // Début faible (10%)
+        { offset: `${(hoverIndex / (data.length - 1)) * 100}%`, opacity: "0.8" }, // Point actif (80%)
+        { offset: "100%", opacity: "1" } // Fin (100%)
+    ];
+
     return (
         <div className={`average-sessions-chart ${hoverIndex !== null ? `active-${hoverIndex}` : ""}`}>
             {/* ✅ Ajout du dégradé dynamique */}
@@ -61,10 +73,15 @@ const AverageSessionsChart = () => {
                 >
                     {/* ✅ Définition du dégradé */}
                     <defs>
-                        <linearGradient id="opacityGradient" x1="0" y1="0" x2="1" y2="0">
-                            <stop offset="0%" stopColor="white" stopOpacity="0.6" />
-                            <stop offset="80%" stopColor="white" stopOpacity="0.8" />
-                            <stop offset="100%" stopColor="white" stopOpacity="1" />
+                        <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="0">
+                            {gradientStops.map((stop, index) => (
+                                <stop 
+                                    key={index} 
+                                    offset={stop.offset} 
+                                    stopColor="white" 
+                                    stopOpacity={stop.opacity} 
+                                />
+                            ))}
                         </linearGradient>
                     </defs>
 
@@ -80,7 +97,7 @@ const AverageSessionsChart = () => {
                         type="monotone"
                         dataKey="sessionLength"
                         className="session-line"
-                        stroke="url(#opacityGradient)"
+                        stroke={`url(#${gradientId})`} // ✅ Dégradé dynamique appliqué
                         strokeWidth={2.5}
                         dot={false} // ❌ Cache les points par défaut
                         activeDot={{ 
