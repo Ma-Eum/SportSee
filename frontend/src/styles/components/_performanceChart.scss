@@ -1,0 +1,65 @@
+@import "../_variables";
+
+.performance-chart {
+    flex: 1;
+    min-width: 0;
+    max-width: 400px;
+    height: 263px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    box-sizing: border-box;
+    background: $background-light;
+    border-radius: 10px;
+    text-align: center;
+
+    .recharts-wrapper {
+        height: 100%;
+        width: 100%;
+    }
+
+    .recharts-responsive-container {
+        height: 90%;
+    }
+
+    .recharts-polar-angle-axis text {
+        fill: $white !important; // ✅ Rendre les textes visibles
+        font-size: 12px !important;
+        font-weight: 500;
+        text-anchor: middle !important;
+    }
+
+    /* Ajustement individuel des libellés */
+    .recharts-polar-angle-axis-tick text:nth-child(1) { /* Intensité (haut) */
+        transform: translateY(17px); 
+    }
+
+    .recharts-polar-angle-axis-tick text:nth-child(2) { /* Vitesse (haut droit) */
+        transform: translate(15px, -10px);
+    }
+
+    .recharts-polar-angle-axis-tick text:nth-child(3) { /* Force (bas droit) */
+        transform: translate(10px, -5px);
+    }
+
+    .recharts-polar-angle-axis-tick text:nth-child(4) { /* Endurance (bas) */
+        transform: translateY(12px);
+    }
+
+    .recharts-polar-angle-axis-tick text:nth-child(5) { /* Énergie (bas gauche) */
+        transform: translate(-10px, -5px);
+    }
+
+    .recharts-polar-angle-axis-tick text:nth-child(6) { /* Cardio (haut gauche) */
+        transform: translate(-10px, 3px);
+    }
+    .recharts-polar-grid line {
+        stroke: rgba(255, 255, 255, 0.3); // ✅ Grille plus discrète
+    }
+
+    .recharts-radar {
+        fill-opacity: 0.6 !important;
+    }
+}
