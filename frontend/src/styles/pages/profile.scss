@@ -1,6 +1,6 @@
 .profile {
     padding: 2rem;
-    max-width: 1200px;
+    max-width: 1440px;
     margin: 0 auto;
 }
 
@@ -24,8 +24,14 @@
 /* 📌 Conteneur Principal */
 .dashboard-container {
     display: flex;
+    justify-content: center; /* ✅ Centre horizontalement */
+    align-items: flex-start; /* ✅ Ajuste les éléments vers le haut */
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
     gap: 2rem;
 }
+
 
 /* 📊 Zone des Graphiques */
 .charts-container {
@@ -37,8 +43,28 @@
 
 .charts-bottom {
     display: flex;
-    gap: 2rem;
-    justify-content: space-between;
+    justify-content: space-between; /* ✅ Répartition égale */
+    align-items: center; /* ✅ Aligne verticalement */
+    gap: 20px; /* ✅ Espacement entre les charts */
+    width: 100%;
+    max-width: 1440px; /* ✅ Assure une largeur max */
+    margin: 0 auto; /* ✅ Centre les charts */
+    padding: 0 20px; /* ✅ Évite que le contenu touche les bords */
+}
+
+
+.average-sessions-chart,
+.performance-chart,
+.score-chart {
+    flex: 1; // ✅ Chaque élément prend une largeur égale
+    min-width: 0; // ✅ Évite les débordements
+    height: 263px; // ✅ Fixe la hauteur à 263px
+    display: flex;
+    flex-direction: column; // ✅ Permet aux éléments internes de s'adapter
+    justify-content: center; // ✅ Centre le contenu verticalement
+    align-items: center; // ✅ Centre le contenu horizontalement
+    overflow: hidden; // ✅ Empêche les débordements du contenu
+    box-sizing: border-box; // ✅ Assure que la hauteur inclut le padding
 }
 
 /* 🟦 Section des Cartes d'Infos à droite */

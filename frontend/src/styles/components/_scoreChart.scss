@@ -1,14 +1,37 @@
+@import "../_variables";
+
 .score-chart {
+    flex: 1;
+    min-width: 0;
+    max-width: 400px;
+    height: 263px; // ✅ Uniformise la hauteur avec les autres
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 10px;
+    box-sizing: border-box;
     text-align: center;
 
     h2 {
         font-size: 1.2rem;
         margin-bottom: 10px;
+        color: white;
     }
 
     .score-text {
         font-size: 1rem;
         font-weight: bold;
         margin-top: 10px;
+    }
+
+    .recharts-wrapper {
+        height: 90%;
+        width: 100%;
+    }
+
+    .recharts-responsive-container {
+        height: 90%;
     }
 }
