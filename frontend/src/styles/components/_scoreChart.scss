@@ -5,33 +5,73 @@
     min-width: 0;
     max-width: 400px;
     height: 263px; // ✅ Uniformise la hauteur avec les autres
+    overflow: hidden;
+    box-sizing: border-box;
+    background: $background-gray;
+    border-radius: 10px;
+    position: relative; // ✅ Permet de positionner le texte au centre
+    text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    overflow: hidden;
-    padding: 10px;
-    box-sizing: border-box;
-    text-align: center;
 
-    h2 {
-        font-size: 1.2rem;
-        margin-bottom: 10px;
-        color: white;
-    }
-
-    .score-text {
-        font-size: 1rem;
-        font-weight: bold;
-        margin-top: 10px;
-    }
-
-    .recharts-wrapper {
-        height: 90%;
+    .chart-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
         width: 100%;
     }
 
-    .recharts-responsive-container {
-        height: 90%;
+    h2 {
+        position: absolute;
+        top: 24px;// ✅ Positionne bien le titre
+        left: 30px; // ✅ Aligné à gauche
+        font-size: 15px;
+        color: $primary-color; 
+        font-weight: bold;
+        margin: 0;
+        text-align: left;
+    }
+
+
+    /* ✅ Fond du cercle légèrement gris */
+    .circle-background {
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: $white; // ✅ Fond gris clair
+    }
+
+    .score-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+    .score-percentage {
+        font-size: 26px;
+        font-weight: bold;
+        color:$background-light; // ✅ Couleur sombre pour le texte
+        margin-bottom: 2px;
+    }
+
+    .score-label {
+        font-size: 16px;
+        color:$secondary-color; // ✅ Gris clair
+        margin-top: 0; // 🔥 Supprime l'espace inutile sous le texte
+    }
+
+    .score-chart .recharts-wrapper {
+        height: 85%;
+        width: 100%;
+    }
+
+    .score-chart .recharts-responsive-container {
+        height: 85%;
     }
 }
