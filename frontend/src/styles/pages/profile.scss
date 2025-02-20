@@ -56,6 +56,9 @@
 .key-info-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
     width: 250px;
+    justify-content: space-between; // ✅ Répartit uniformément les cartes
+    gap: 39px; // ✅ Espacement entre les cartes
+    height: 100%; // ✅ S'assure que le conteneur prend toute la hauteur disponible
+    min-height: 550px; // ✅ Ajuste selon le design (valeur à tester)
 }

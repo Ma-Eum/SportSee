@@ -4,11 +4,12 @@
     display: flex;
     align-items: center;
     background-color: $background-gray;
-    padding: 20px;
+    padding: 32px;
     border-radius: 10px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     width: 100%;
-    gap: 15px;
+    gap: 33px;
+    box-sizing: border-box;
+    flex-grow: 1; // ✅ Permet d'étirer chaque carte pour remplir l'espace
 
     .nutrition-icon {
         width: 60px;
@@ -25,11 +26,13 @@
         font-size: 20px;
         font-weight: bold;
         color: $background-light;
+        margin: 0;
     }
 
     .nutrition-type {
         color: $secondary-color; // ✅ Utilisation de la variable pour #74798C
         font-size: 14px;
+        margin: 0;
     }    
 
     .nutrition-label {
