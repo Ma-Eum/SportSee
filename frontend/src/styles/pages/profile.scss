@@ -52,21 +52,6 @@
     padding: 0 20px; /* ✅ Évite que le contenu touche les bords */
 }
 
-
-.average-sessions-chart,
-.performance-chart,
-.score-chart {
-    flex: 1; // ✅ Chaque élément prend une largeur égale
-    min-width: 0; // ✅ Évite les débordements
-    height: 263px; // ✅ Fixe la hauteur à 263px
-    display: flex;
-    flex-direction: column; // ✅ Permet aux éléments internes de s'adapter
-    justify-content: center; // ✅ Centre le contenu verticalement
-    align-items: center; // ✅ Centre le contenu horizontalement
-    overflow: hidden; // ✅ Empêche les débordements du contenu
-    box-sizing: border-box; // ✅ Assure que la hauteur inclut le padding
-}
-
 /* 🟦 Section des Cartes d'Infos à droite */
 .key-info-container {
     display: flex;
