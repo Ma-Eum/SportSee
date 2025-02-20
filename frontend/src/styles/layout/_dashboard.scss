@@ -1,6 +1,7 @@
 /* ==========================
 |        Dashboard          |
 ========================== */
+@use "../_variables" as *;
 
 .dashboard-layout {
     display: flex;
@@ -14,7 +15,7 @@
 
     .dashboard-main {
 
-        background-color: #FFFFFF; // Définir le fond en blanc
+        background-color: $white; // Définir le fond en blanc
         padding: 20px;
         width: 100%;
     }

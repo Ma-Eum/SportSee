@@ -1,4 +1,5 @@
-@import "../_variables"; // ✅ Import des couleurs globales
+@use "../_variables" as *;
+ // ✅ Import des couleurs globales
 
 .average-sessions-chart {
     flex: 1; /* ✅ Permet aux charts de prendre une place égale */

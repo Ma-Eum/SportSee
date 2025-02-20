@@ -1,11 +1,12 @@
 /* ==========================
 |            Sidebar        |
 ========================== */
+@use "../_variables" as *;
 
 .sidebar {
     width: 80px;
-    background-color: black;
-    color: white;
+    background-color: $black;
+    color: $white;
     height: auto;
     display: flex;
     flex-direction: column;

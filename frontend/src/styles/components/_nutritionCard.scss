@@ -1,9 +1,9 @@
-@import "../_variables";
+@use "../_variables" as *;
 
 .nutrition-card {
     display: flex;
     align-items: center;
-    background-color: $background-gray;
+    background-color: $background-light;
     padding: 32px;
     border-radius: 10px;
     width: 100%;
@@ -25,7 +25,7 @@
     .nutrition-value {
         font-size: 20px;
         font-weight: bold;
-        color: $background-light;
+        color: $background-gray;
         margin: 0;
     }
 
@@ -37,6 +37,6 @@
 
     .nutrition-label {
         font-size: 14px;
-        color: #74798C;
+        color: $secondary-color;
     }
 }

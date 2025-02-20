@@ -1,4 +1,4 @@
-@import "../_variables";
+@use "../_variables" as *;
 
 .performance-chart {
     flex: 1;
@@ -11,7 +11,7 @@
     align-items: center;
     overflow: hidden;
     box-sizing: border-box;
-    background: $background-light;
+    background: $background-gray;
     border-radius: 10px;
     text-align: center;
 
