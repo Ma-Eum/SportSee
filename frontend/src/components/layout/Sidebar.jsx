@@ -15,7 +15,10 @@ const Sidebar = () => {
                     <li><img src={weightIcon} alt="Musculation" /></li>
                 </ul>
             </nav>
-            <p>© SportSee 2024</p>
+            {/* ✅ Ajout d'une div pour mieux gérer le positionnement */}
+            <div className="copyright">
+                <p>Copiryght SportSee 2020</p>
+            </div>
         </aside>
     );
 };

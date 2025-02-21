@@ -1,7 +1,7 @@
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import "../../styles/layout/_dashboard.scss";
-import PropTypes from "prop-types"; // 🔥 Importer PropTypes
+import PropTypes from "prop-types"; 
 
 const DashboardLayout = ({ children }) => {
     return (
@@ -15,7 +15,6 @@ const DashboardLayout = ({ children }) => {
     );
 };
 
-// 🔥 Ajout des PropTypes pour éviter l'erreur ESLint
 DashboardLayout.propTypes = {
     children: PropTypes.node.isRequired,
 };
