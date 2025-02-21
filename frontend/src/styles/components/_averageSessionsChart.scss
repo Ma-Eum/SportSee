@@ -22,8 +22,13 @@
     transition: background 0.3s ease-in-out;    
     
     // ✅ Assure que la courbe prend toute la largeur du conteneur sans margin ni padding
-    .recharts-wrapper, .recharts-surface {
-    width: 100% !important;
+    .recharts-wrapper {
+        width: 100% !important;
+    }
+    
+    .recharts-surface {
+        width: 100% !important;
+        overflow: hidden; // ✅ Évite les débordements
     }
 
     h2 {
@@ -98,13 +103,17 @@
     }
 
     // ✅ Ajoute un padding de 14px uniquement à l'axe X sans affecter la courbe
-    .recharts-cartesian-axis.recharts-xAxis {
-        transform: translateX(14px); // ✅ Décale uniquement l'axe X sans toucher à la courbe
-        width: calc(100% - 29px) !important; // ✅ Réduit la largeur pour équilibrer les marges
-    }
+    .recharts-cartesian-axis{
+        width: calc(100% - 30px) !important; // ✅ Réduit la largeur de l'axe pour éviter que "D" sorte du conteneur
+        margin: 0 auto; // ✅ Centre bien l'axe X
+   }
 
     .recharts-cartesian-axis-ticks {
-        text-anchor: middle !important; // ✅ Centre chaque texte sous son point
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0 15px; // ✅ Ajoute du padding à gauche et à droite pour centrer les ticks
+        box-sizing: border-box; // ✅ Assure que les ticks restent dans leur conteneur
     }
 
     // ✅ Change la couleur du texte des ticks en blanc
