@@ -27,20 +27,21 @@
 .dashboard-container {
     display: flex;
     justify-content: center; /* ✅ Centre horizontalement */
-    align-items: flex-start; /* ✅ Ajuste les éléments vers le haut */
+    align-items: stretch; /* ✅ Force les enfants à prendre la même hauteur */
     max-width: 1440px;
     width: 100%;
     margin: 0 auto;
-    gap: 2rem;
+    gap: 32px;
 }
 
 
 /* 📊 Zone des Graphiques */
 .charts-container {
-    flex: 2; 
+    flex: 2;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 28px;
+    height: auto; /* ✅ Prend toute la hauteur disponible */
 }
 
 .charts-bottom {
@@ -55,11 +56,10 @@
 
 /* 🟦 Section des Cartes d'Infos à droite */
 .key-info-container {
+    flex: 1; /* ✅ Prend l'espace restant */
     display: flex;
     flex-direction: column;
+    justify-content: space-between; /* ✅ Répartit uniformément les cartes */
     width: 250px;
-    justify-content: space-between; // ✅ Répartit uniformément les cartes
-    gap: 39px; // ✅ Espacement entre les cartes
-    height: 100%; // ✅ S'assure que le conteneur prend toute la hauteur disponible
-    min-height: 550px; // ✅ Ajuste selon le design (valeur à tester)
+    height: auto; /* ✅ Doit s'étirer pour suivre .charts-container */
 }

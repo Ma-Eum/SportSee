@@ -8,8 +8,7 @@
     border-radius: 10px;
     width: 100%;
     gap: 33px;
-    box-sizing: border-box;
-    flex-grow: 1; // ✅ Permet d'étirer chaque carte pour remplir l'espace
+    flex-grow: 1; /* ✅ Permet aux cartes de s'étirer uniformément */
 
     .nutrition-icon {
         width: 60px;
