@@ -9,15 +9,19 @@
     align-items: center;
     background-color: $black;
     color: $white;
-    padding: 20px;
+    padding:18px 91px 12px 28px;
 
     .logo {
-        height: 50px; // ✅ Ajuste la taille du logo
+        height: 61px; // ✅ Ajuste la taille du logo
     }
     
     ul {
         list-style: none;
         display: flex;
-        gap: 20px;
+        gap: 219px;
+        li{
+            font-size: 24px;
+            font-weight: medium;
+        }
     }
 }
