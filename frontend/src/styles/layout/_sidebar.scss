@@ -55,4 +55,10 @@
         transform: rotate(-90deg);
         white-space: nowrap;
     }
+
+    /* ✅ Masque la nav sur la homePage sans casser l'alignement */
+.hidden-nav {
+    visibility: hidden; // Cache le menu sans modifier sa position
+}
+
 }
