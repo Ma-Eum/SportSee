@@ -13,16 +13,18 @@ const HomePage = () => {
 
   return (
     <DashboardLayout hideNav={true}> {/* ✅ Cache la nav */}
-      <div className="homepage-container">
-        <h1>Choisissez un profil</h1>
-        <div className="user-list">
-          {users.map((user) => (
-            <Link key={user.id} to={`/profile/${user.id}`} className="user-card">
-              {user.userInfos.firstName} {user.userInfos.lastName}
-            </Link>
-          ))}
-        </div>
+        <div className="homepage">
+    <div className="homepage-container">
+      <h1>Choisissez un profil</h1>
+      <div className="user-list">
+        {users.map((user) => (
+          <Link key={user.id} to={`/profile/${user.id}`} className="user-card">
+            {user.userInfos.firstName} {user.userInfos.lastName}
+          </Link>
+        ))}
       </div>
+    </div>
+  </div>
     </DashboardLayout>
   );
 };

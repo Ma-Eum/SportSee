@@ -4,6 +4,7 @@
 @use "../_variables" as *;
 
 .dashboard-layout {
+    flex: 1; // ✅ Permet d'occuper tout l'espace restant
     display: flex;
     flex-direction: column;
     height: 100vh; // ✅ Prend toute la hauteur de l'écran
@@ -14,12 +15,16 @@
     }
 
     .dashboard-main {
+        flex: 1; // ✅ Assure que le contenu prend toute la largeur disponible
         background-color: $white;
         padding: 68px 90px 86px 107px;
         width: 100%;
         display: flex;
         justify-content: center; // ✅ Centre le contenu horizontalement
         align-items: center; // ✅ Centre le contenu verticalement
+        max-width: 1440px; // ✅ Définit une largeur max adaptée aux grands écrans
+        margin: 0 auto; // ✅ Centre la page sur un grand écran
+        min-height: 100vh; // ✅ Assure que la hauteur est correcte sur toutes les pages
     }
 }
 

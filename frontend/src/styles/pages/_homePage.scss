@@ -1,17 +1,23 @@
 @use "../_variables" as *; // ✅ Import des variables globales
 
 .homepage {
+  flex: 1; // ✅ Permet d'occuper tout l'espace restant
   display: flex;
   flex-direction: column;
+  width: 100vw; // ✅ Permet à la home de s'étirer comme Profile
   height: 100vh;
   background-color: $background-light;
 }
 
 .homepage-container {
   display: flex;
-  flex: 1;
+  flex-direction: column;
   justify-content: center; // ✅ Centre le contenu horizontalement
   align-items: center; // ✅ Centre le contenu verticalement
+  width: 100%;
+  min-height: 100vh; // ✅ Ajuste la hauteur en tenant compte du header
+  margin: 0 auto; // ✅ Centre le tout
+  padding: 50px; // ✅ Ajoute un padding pour que ce soit plus agréable visuellement
 }
 
 h1 {
