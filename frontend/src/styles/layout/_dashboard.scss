@@ -6,16 +6,20 @@
 .dashboard-layout {
     display: flex;
     flex-direction: column;
-    height: auto; // Ajuste la hauteur en fonction du contenu
+    height: 100vh; // ✅ Prend toute la hauteur de l'écran
 
     .dashboard-content {
         display: flex; // ✅ Permet d'aligner la sidebar et le contenu principal
+        flex: 1;
     }
 
     .dashboard-main {
-        background-color: $white; 
+        background-color: $white;
         padding: 68px 90px 86px 107px;
         width: 100%;
+        display: flex;
+        justify-content: center; // ✅ Centre le contenu horizontalement
+        align-items: center; // ✅ Centre le contenu verticalement
     }
 }
 

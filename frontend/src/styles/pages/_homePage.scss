@@ -1,47 +1,43 @@
-@use "../_variables" as *;
+@use "../_variables" as *; // ✅ Import des variables globales
 
-.home-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: $background-light;
+.homepage {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: $background-light;
 }
 
-.home-title {
-    font-size: 32px;
-    font-weight: bold;
-    color: $black;
-    margin-bottom: 10px;
+.homepage-container {
+  display: flex;
+  flex: 1;
+  justify-content: center; // ✅ Centre le contenu horizontalement
+  align-items: center; // ✅ Centre le contenu verticalement
 }
 
-.home-subtitle {
-    font-size: 18px;
-    color: $secondary-color;
-    margin-bottom: 30px;
+h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: $primary-color;
 }
 
-.profiles-container {
-    display: flex;
-    gap: 20px;
+.user-list {
+  display: flex;
+  gap: 20px;
 }
 
-.profile-card {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 200px;
-    height: 100px;
-    background-color: $primary-color;
-    color: $white;
-    font-size: 20px;
-    font-weight: bold;
-    border-radius: 10px;
-    text-decoration: none;
-    transition: transform 0.2s;
+.user-card {
+  padding: 15px 30px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: $secondary-color;
+  color: $primary-color;
+  text-decoration: none;
+  transition: 0.3s ease-in-out;
 
-    &:hover {
-        transform: scale(1.05);
-    }
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
 }

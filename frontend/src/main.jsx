@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Profile from "./pages/Profile.jsx"; // Vérifie bien que le fichier existe
+import App from "./App.jsx"; // ✅ On affiche `App.jsx` qui gère toutes les pages
 import "./index.css";
 import "./styles/main.scss"; 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Profile />
+    <App />
   </React.StrictMode>
 );

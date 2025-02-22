@@ -42,8 +42,11 @@
 
     /* ✅ Assurer que le copyright est bien en bas */
     .copyright {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 100%;
-        padding-bottom: 50px;
+        padding-bottom: 0px;
     }
 
     p {

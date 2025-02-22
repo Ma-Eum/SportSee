@@ -1,3 +1,4 @@
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getUserData } from "../services/apiService";
 import DashboardLayout from "../components/layout/DashboardLayout";
@@ -12,20 +13,20 @@ import proteinIcon from "../assets/images/protein-icon.png";
 import carbsIcon from "../assets/images/carbs-icon.png";
 import fatIcon from "../assets/images/fat-icon.png";
 
-import "../styles/pages/profile.scss"; // 🔥 Import du bon style
+import "../styles/pages/profile.scss";
 
 const Profile = () => {
+    const { userId } = useParams();
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        console.log("🔄 Tentative de récupération des données utilisateur...");
-        getUserData().then((data) => { // ✅ Suppression du `userId`
-            console.log("✅ Données reçues :", data);
+        console.log(`🔄 Récupération des données pour userId: ${userId}`);
+        getUserData(userId).then((data) => {
             if (data) {
                 setUser(data);
             }
-        }).catch(error => console.error("❌ Erreur lors de la récupération des données :", error));
-    }, []);
+        }).catch(error => console.error("❌ Erreur récupération utilisateur :", error));
+    }, [userId]);
 
     return (
         <DashboardLayout>
@@ -36,17 +37,15 @@ const Profile = () => {
                         <p className="congrats-message">Félicitations ! Vous avez explosé vos objectifs hier 🎉</p>
 
                         <div className="dashboard-container">
-                            {/* 🟥 Graphiques Principaux */}
                             <div className="charts-container">
-                                <ActivityChart />
+                                <ActivityChart userId={userId} />
                                 <div className="charts-bottom">
-                                    <AverageSessionsChart />
-                                    <PerformanceChart />
+                                    <AverageSessionsChart userId={userId} />
+                                    <PerformanceChart userId={userId} /> {/* ✅ Ajout de userId */}
                                     <ScoreChart score={user.todayScore} />
                                 </div>
                             </div>
 
-                            {/* 🟦 Cartes Infos Clés à droite */}
                             <div className="key-info-container">
                                 <NutritionCard type="Calories" value={user.keyData.calorieCount} unit="kCal" icon={caloriesIcon} />
                                 <NutritionCard type="Protéines" value={user.keyData.proteinCount} unit="g" icon={proteinIcon} />

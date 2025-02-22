@@ -1,22 +1,25 @@
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer } from "recharts";
 import { getUserPerformance } from "../services/apiService";
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types"; // ✅ Ajout pour la validation des props
 import "../styles/components/_performanceChart.scss"; // ✅ Import du style
 
-const PerformanceChart = () => {
+const PerformanceChart = ({ userId }) => { // ✅ Ajout du `userId` en prop
     const [performance, setPerformance] = useState(null);
 
     useEffect(() => {
-        getUserPerformance().then((data) => {
+        if (!userId) return;
+        console.log(`🔄 Récupération des performances pour userId: ${userId}`);
+        getUserPerformance(userId).then((data) => {
             if (data) {
                 setPerformance(data);
             }
-        });
-    }, []);
+        }).catch(error => console.error("❌ Erreur récupération performances :", error));
+    }, [userId]); // ✅ Mise à jour si `userId` change
 
     if (!performance) return <p>Chargement...</p>;
 
-
+    // ✅ Mapping des catégories pour les afficher correctement
     const categories = {
         1: "Intensité",
         2: "Vitesse",
@@ -26,6 +29,7 @@ const PerformanceChart = () => {
         6: "Cardio"
     };
 
+    // ✅ Formatage des données pour le graphique
     const formattedData = performance.data.map(item => ({
         subject: categories[item.kind],
         value: item.value
@@ -69,6 +73,11 @@ const PerformanceChart = () => {
             </ResponsiveContainer>
         </div>
     );
+};
+
+// ✅ Vérification des props
+PerformanceChart.propTypes = {
+    userId: PropTypes.string.isRequired, // ✅ Assure que `userId` est bien reçu en string
 };
 
 export default PerformanceChart;
