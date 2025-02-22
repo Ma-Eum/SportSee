@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import DashboardLayout from "../components/layout/DashboardLayout"; // ✅ Utilise le layout avec hideNav
+import DashboardLayout from "../components/layout/DashboardLayout";
 import { getAllUsers } from "../services/apiService";
 import "../styles/pages/_homePage.scss";
 
@@ -12,7 +12,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <DashboardLayout hideNav={true}> {/* ✅ Cache la navigation */}
+    <DashboardLayout hideNav={true}> {/* ✅ Cache la nav */}
       <div className="homepage-container">
         <h1>Choisissez un profil</h1>
         <div className="user-list">
