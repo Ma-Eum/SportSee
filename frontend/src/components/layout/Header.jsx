@@ -13,9 +13,9 @@ const Header = () => {
                 <nav>
                     <ul>
                         <li><Link to="/">Accueil</Link></li>
-                        <li>Profil</li>
-                        <li>Réglage</li>
-                        <li>Communauté</li>
+                        <li><Link to="/profil/12">Profil</Link></li>
+                        <li><Link to="/settings">Réglage</Link></li>
+                        <li><Link to="/chat">Communauté</Link></li>
                     </ul>
                 </nav>
             )}

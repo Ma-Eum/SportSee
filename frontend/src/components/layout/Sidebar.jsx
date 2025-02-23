@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import "../../styles/layout/_sidebar.scss";
 import yogaIcon from "../../assets/images/yoga-icon.png";
 import swimIcon from "../../assets/images/natation-icon.png";
@@ -10,10 +11,10 @@ const Sidebar = ({ hideNav = false }) => {
         <aside className="sidebar">
             <nav className={hideNav ? "hidden-nav" : ""}> {/* ✅ Masque la nav mais garde l'espace */}
                 <ul>
-                    <li><img src={yogaIcon} alt="Yoga" /></li>
-                    <li><img src={swimIcon} alt="Natation" /></li>
-                    <li><img src={bikeIcon} alt="Vélo" /></li>
-                    <li><img src={weightIcon} alt="Musculation" /></li>
+                    <li><Link to="/yoga"><img src={yogaIcon} alt="Yoga" /></Link></li>
+                    <li><Link to="/natation"><img src={swimIcon} alt="Natation" /></Link></li>
+                    <li><Link to="velo"><img src={bikeIcon} alt="Vélo" /></Link></li>
+                    <li><Link to="/musculation"><img src={weightIcon} alt="Musculation" /></Link></li>
                 </ul>
             </nav>
             <div className="copyright">
