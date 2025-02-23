@@ -28,5 +28,16 @@
         margin: 0 auto; // ✅ Centre la page sur un grand écran
         min-height: 100vh; // ✅ Assure que la hauteur est correcte sur toutes les pages
     }
+    .mode-indicator {
+        font-size: 14px;
+        font-weight: bold;
+        color: white;
+        background-color: #ff6600;
+        padding: 5px 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    
 }
 

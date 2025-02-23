@@ -1,95 +1,52 @@
-import mockData from "../mocks/mockData.json";
+import mockData from "../data/mockData.json"; // Import du mock
+import { USE_MOCK_DATA, API_BASE_URL } from "../config"; // Configuration
 
 /**
- * Récupère tous les utilisateurs disponibles.
- */
-export const getAllUsers = async () => {
-    console.log("🔄 Récupération de tous les utilisateurs...");
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            if (mockData.users && mockData.users.length > 0) {
-                console.log("✅ Utilisateurs récupérés :", mockData.users);
-                resolve(mockData.users);
-            } else {
-                console.error("❌ Aucun utilisateur trouvé !");
-                reject("Aucun utilisateur trouvé");
-            }
-        }, 500);
-    });
-};
-
-/**
- * Récupère les informations de l'utilisateur par son ID.
+ * Récupère les données d'un utilisateur (API ou Mock)
+ * @param {string} userId 
+ * @returns {Promise<Object>}
  */
 export const getUserData = async (userId) => {
-    console.log(`🔄 Récupération des données utilisateur pour l'ID: ${userId}`);
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            const user = mockData.users.find(user => user.id === parseInt(userId));
-            if (user) {
-                console.log("✅ Utilisateur trouvé :", user);
-                resolve(user);
-            } else {
-                console.error("❌ Utilisateur non trouvé !");
-                reject("Utilisateur introuvable");
-            }
-        }, 500);
-    });
+    if (USE_MOCK_DATA) {
+        console.log("🔄 Utilisation des données mockées...");
+        return new Promise((resolve) => {
+            const user = mockData.users.find(user => user.id === Number(userId));
+            resolve(user || null);
+        });
+    }
+
+    try {
+        console.log("🔄 Récupération des données depuis l'API...");
+        const response = await fetch(`${API_BASE_URL}/user/${userId}`);
+        if (!response.ok) throw new Error("Erreur lors de la récupération des données");
+        return await response.json();
+    } catch (error) {
+        console.error("❌ Erreur API :", error);
+        return null;
+    }
 };
 
 /**
- * Récupère l'activité quotidienne de l'utilisateur.
- */
-export const getUserActivity = async (userId) => {
-    console.log(`🔄 Récupération de l'activité pour userId: ${userId}`);
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            const activity = mockData.activity.find(activity => activity.userId === parseInt(userId));
-            if (activity) {
-                console.log("✅ Activité récupérée :", activity.sessions);
-                resolve(activity.sessions);
-            } else {
-                console.error("❌ Activité utilisateur non trouvée !");
-                reject("Activité utilisateur introuvable");
-            }
-        }, 500);
-    });
-};
-
-/**
- * Récupère les sessions moyennes de l'utilisateur.
+ * Récupère les sessions moyennes d'un utilisateur
+ * @param {string} userId 
+ * @returns {Promise<Array>}
  */
 export const getUserAverageSessions = async (userId) => {
-    console.log(`🔄 Récupération des sessions moyennes pour userId: ${userId}`);
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            const userSessions = mockData.averageSessions.find(session => session.userId === parseInt(userId));
-            if (userSessions) {
-                console.log("✅ Sessions moyennes récupérées :", userSessions.sessions);
-                resolve(userSessions.sessions);
-            } else {
-                console.error("❌ Sessions moyennes non trouvées !");
-                reject("Sessions moyennes introuvables");
-            }
-        }, 500);
-    });
-};
+    if (USE_MOCK_DATA) {
+        console.log("🔄 Utilisation des sessions mockées...");
+        return new Promise((resolve) => {
+            const userSessions = mockData.averageSessions.find(session => session.userId === Number(userId));
+            resolve(userSessions ? userSessions.sessions : []);
+        });
+    }
 
-/**
- * Récupère les performances de l'utilisateur.
- */
-export const getUserPerformance = async (userId) => {
-    console.log(`🔄 Récupération des performances pour userId: ${userId}`);
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            const performance = mockData.performance.find(perf => perf.userId === parseInt(userId));
-            if (performance) {
-                console.log("✅ Performances récupérées :", performance);
-                resolve(performance);
-            } else {
-                console.error("❌ Performances utilisateur non trouvées !");
-                reject("Performances utilisateur introuvables");
-            }
-        }, 500);
-    });
+    try {
+        console.log("🔄 Récupération des sessions depuis l'API...");
+        const response = await fetch(`${API_BASE_URL}/user/${userId}/average-sessions`);
+        if (!response.ok) throw new Error("Erreur lors de la récupération des sessions");
+        return await response.json();
+    } catch (error) {
+        console.error("❌ Erreur API :", error);
+        return [];
+    }
 };

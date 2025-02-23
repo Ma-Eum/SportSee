@@ -2,14 +2,20 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import "../../styles/layout/_dashboard.scss";
 import PropTypes from "prop-types";
+import { USE_MOCK_DATA } from "../config"; // ✅ Import du mode actuel
 
 const DashboardLayout = ({ children, hideNav = false }) => {
     return (
         <div className="dashboard-layout">
-            <Header hideNav={hideNav} /> {/* ✅ On passe `hideNav` aussi au Header */}
+            <Header hideNav={hideNav} />
             <div className="dashboard-content">
-                <Sidebar hideNav={hideNav} /> {/* ✅ On passe `hideNav` à Sidebar */}
-                <main className="dashboard-main">{children}</main>
+                <Sidebar hideNav={hideNav} />
+                <main className="dashboard-main">
+                    <div className="mode-indicator">
+                        Mode : {USE_MOCK_DATA ? "Mock Data" : "API Backend"}
+                    </div>
+                    {children}
+                </main>
             </div>
         </div>
     );
@@ -17,7 +23,7 @@ const DashboardLayout = ({ children, hideNav = false }) => {
 
 DashboardLayout.propTypes = {
     children: PropTypes.node.isRequired,
-    hideNav: PropTypes.bool, // ✅ Ajout de la validation de prop
+    hideNav: PropTypes.bool,
 };
 
 export default DashboardLayout;
