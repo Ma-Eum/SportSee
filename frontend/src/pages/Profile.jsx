@@ -13,7 +13,7 @@ import proteinIcon from "../assets/images/protein-icon.png";
 import carbsIcon from "../assets/images/carbs-icon.png";
 import fatIcon from "../assets/images/fat-icon.png";
 
-import "../styles/pages/profile.scss";
+import "../styles/pages/_profile.scss";
 
 const Profile = () => {
     const { userId } = useParams();
@@ -21,11 +21,9 @@ const Profile = () => {
 
     useEffect(() => {
         console.log(`🔄 Récupération des données pour userId: ${userId}`);
-        getUserData(userId).then((data) => {
-            if (data) {
-                setUser(data);
-            }
-        }).catch(error => console.error("❌ Erreur récupération utilisateur :", error));
+        getUserData(userId)
+            .then((data) => setUser(data))
+            .catch(error => console.error("❌ Erreur récupération utilisateur :", error));
     }, [userId]);
 
     return (
@@ -41,8 +39,8 @@ const Profile = () => {
                                 <ActivityChart userId={userId} />
                                 <div className="charts-bottom">
                                     <AverageSessionsChart userId={userId} />
-                                    <PerformanceChart userId={userId} /> {/* ✅ Ajout de userId */}
-                                    <ScoreChart score={user.todayScore} />
+                                    <PerformanceChart userId={userId} />
+                                    <ScoreChart userId={userId} />
                                 </div>
                             </div>
 
@@ -52,7 +50,6 @@ const Profile = () => {
                                 <NutritionCard type="Glucides" value={user.keyData.carbohydrateCount} unit="g" icon={carbsIcon} />
                                 <NutritionCard type="Lipides" value={user.keyData.lipidCount} unit="g" icon={fatIcon} />
                             </div>
-
                         </div>
                     </>
                 ) : (

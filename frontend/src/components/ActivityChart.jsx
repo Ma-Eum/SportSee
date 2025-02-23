@@ -6,26 +6,38 @@ import PropTypes from "prop-types";
 import { getUserActivity } from "../services/apiService";
 import "../styles/components/_activityChart.scss"; 
 
-const ActivityChart = () => {
+const ActivityChart = ({ userId }) => { // ✅ Ajout du userId en prop
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        getUserActivity().then((activityData) => { 
-            if (activityData) {
-                setData(activityData);
-            }
-        });
-    }, []);
+        if (!userId) return;
 
-    // ✅ Tooltip personnalisé avec position verticale FIXE
-    const CustomTooltip = ({ active, payload, coordinate }) => {
+        console.log(`🔄 Récupération de l'activité pour userId: ${userId}`);
+
+        getUserActivity(userId)
+            .then((activityData) => { 
+                if (activityData && activityData.length > 0) {
+                    console.log("✅ Activité récupérée :", activityData);
+                    setData(activityData);
+                } else {
+                    console.error("❌ Aucune donnée d'activité trouvée !");
+                    setData([]);
+                }
+            })
+            .catch(error => {
+                console.error("❌ Erreur récupération activité :", error);
+                setData([]); // Assure que le composant ne plante pas
+            });
+    }, [userId]);
+
+    // ✅ Tooltip personnalisé
+    const CustomTooltip = ({ active, payload, coordinate  }) => {
         if (active && payload && payload.length) {
             return (
-                <div 
-                    className="custom-tooltip" 
+                <div className="custom-tooltip"
                     style={{ 
                         left: `${coordinate.x + 35}px`, // ✅ Ajusté pour s'aligner avec la maquette
-                        top: `-30px`,  // ✅ FIXE verticalement
+                        top: `-20px`,  // ✅ FIXE verticalement
                     }}
                 >
                     <p>{`${payload[0].value}kg`}</p>
@@ -84,14 +96,11 @@ const ActivityChart = () => {
                         tickLine={false}
                         axisLine={false}
                         domain={[50, 300]}  
-                        ticks={[50, 150]}  
+                        ticks={[50, 150]} 
                     />
 
-                    {/* ✅ Tooltip personnalisé avec curseur plus étroit et centré */}
-                    <Tooltip 
-                        content={<CustomTooltip />} 
-                        cursor={{ fill: "rgba(196, 196, 196, 0.5)", width: 56 }} // 🔥 Réactive le curseur
-                    />
+                    {/* ✅ Tooltip personnalisé */}
+                    <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(196, 196, 196, 0.5)", width: 56 }} />
 
                     {/* ✅ Barres ajustées */}
                     <Bar yAxisId="right" dataKey="kilogram" fill="#282D30" radius={[3, 3, 0, 0]} />
@@ -100,6 +109,11 @@ const ActivityChart = () => {
             </ResponsiveContainer>
         </div>
     );
+};
+
+// ✅ Ajout de la vérification des props
+ActivityChart.propTypes = {
+    userId: PropTypes.string.isRequired,
 };
 
 export default ActivityChart;
