@@ -7,6 +7,7 @@ import ActivityChart from "../components/ActivityChart";
 import PerformanceChart from "../components/PerformanceChart"; 
 import ScoreChart from "../components/ScoreChart";
 import NutritionCard from "../components/NutritionCard";
+import Page404 from "./404"; // Utilisation du bon fichier
 
 import caloriesIcon from "../assets/images/calories-icon.png";
 import proteinIcon from "../assets/images/protein-icon.png";
@@ -18,13 +19,29 @@ import "../styles/pages/_profile.scss";
 const Profile = () => {
     const { userId } = useParams();
     const [user, setUser] = useState(null);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         console.log(`🔄 Récupération des données pour userId: ${userId}`);
+        
         getUserData(userId)
-            .then((data) => setUser(data))
-            .catch(error => console.error("❌ Erreur récupération utilisateur :", error));
+            .then((data) => {
+                if (!data) {
+                    console.warn("⚠️ Utilisateur non trouvé, affichage de la page 404");
+                    setError(true);
+                } else {
+                    setUser(data);
+                }
+            })
+            .catch((error) => {
+                console.error("❌ Erreur récupération utilisateur :", error);
+                setError(true); // On passe en erreur si l'API renvoie une erreur
+            });
     }, [userId]);
+
+    if (error) {
+        return <Page404 />; // Affichage de la page 404 en cas d'erreur API
+    }
 
     return (
         <DashboardLayout>

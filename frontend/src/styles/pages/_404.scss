@@ -1,0 +1,41 @@
+@use "../_variables" as *;
+
+.not-found {
+    background-color: $white;/* Fond blanc */
+    height: 100vh; /* Pleine hauteur */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: $primary-color; /* Assurer que le texte est bien visible */
+
+
+    h1 {
+        font-size: 3rem;
+        color: $primary-color;
+    }
+
+    p {
+        font-size:18px;
+        padding: 0 50px 0 100px;
+    }
+
+    .home-button {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 18px;
+        font-weight: bold;
+        background-color: $secondary-color;
+        color: $primary-color;
+        text-decoration: none;
+        transition: 0.3s ease-in-out;
+      
+
+        &:hover {
+            background-color: #0056b3;
+        }
+    }
+}
