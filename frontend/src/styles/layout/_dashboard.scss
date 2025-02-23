@@ -9,6 +9,8 @@
     flex-direction: column;
     height: 100vh; // ✅ Prend toute la hauteur de l'écran
 
+
+
     .dashboard-content {
         display: flex; // ✅ Permet d'aligner la sidebar et le contenu principal
         flex: 1;
