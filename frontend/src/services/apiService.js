@@ -1,6 +1,9 @@
 import mockData from "../mocks/mockData.json"; // Import du mock
 import { USE_MOCK_DATA, API_BASE_URL } from "../config"; // Configuration
 
+console.log(`🛠️ Mode MockData activé : ${USE_MOCK_DATA}`);
+
+
 /**
  * Récupère tous les utilisateurs (API ou Mock)
  * @returns {Promise<Array>}

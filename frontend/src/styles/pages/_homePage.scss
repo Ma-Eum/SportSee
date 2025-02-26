@@ -1,4 +1,6 @@
 @use "../_variables" as *; // ✅ Import des variables globales
+@use "sass:color"; // ✅ Import du module color
+
 
 .user-selection {
   display: flex;
@@ -30,7 +32,7 @@
     transition: 0.3s;
 
     &:hover {
-      background-color: darken($secondary-color, 10%);
+      background-color: color.mix($black, $secondary-color, 10%);
     }
 
     &:disabled {
