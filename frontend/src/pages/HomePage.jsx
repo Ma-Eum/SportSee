@@ -21,16 +21,20 @@ const HomePage = () => {
       <div className="homepage-container">
         <h1>Choisissez un profil</h1>
         <div className="user-list">
-          {users.map((user) => (
-            <Link
-              key={user.id}
-              to={`/profile/${user.id}`}
-              className="user-card"
-              onClick={() => console.log("✅ ID cliqué :", user.id)}
-            >
-              {user.userInfos.firstName} {user.userInfos.lastName}
-            </Link>
-          ))}
+          {users.length > 0 ? (
+            users.map((user) => (
+              <Link
+                key={user.id}
+                to={`/profile/${user.id}`}
+                className="user-card"
+                onClick={() => console.log("✅ ID cliqué :", user.id)}
+              >
+                {user.userInfos?.firstName} {user.userInfos?.lastName}
+              </Link>
+            ))
+          ) : (
+            <p>Aucun utilisateur trouvé.</p>
+          )}
         </div>
       </div>
     </DashboardLayout>

@@ -2,7 +2,6 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import "../../styles/layout/_dashboard.scss";
 import PropTypes from "prop-types";
-import { USE_MOCK_DATA } from "../config"; // ✅ Import du mode actuel
 
 const DashboardLayout = ({ children, hideNav = false }) => {
     return (
@@ -11,9 +10,6 @@ const DashboardLayout = ({ children, hideNav = false }) => {
             <div className="dashboard-content">
                 <Sidebar hideNav={hideNav} />
                 <main className="dashboard-main">
-                    <div className="mode-indicator">
-                        Mode : {USE_MOCK_DATA ? "Mock Data" : "API Backend"}
-                    </div>
                     {children}
                 </main>
             </div>
