@@ -19,10 +19,24 @@ const HomePage = () => {
         }
 
         console.log("✅ Liste des utilisateurs récupérée :", data);
-        setUsers(data); // Stocke les utilisateurs dans l'état
 
-        if (data[0]?.id) {
-          setSelectedUser(String(data[0].id)); // Sélectionne le premier utilisateur par défaut
+        // Ajoutons un log pour vérifier la structure des données
+        data.forEach((user, index) => {
+          console.log(`Utilisateur ${index + 1}:`, user); // Log de chaque utilisateur pour vérifier sa structure
+        });
+
+        // Filtrage des utilisateurs valides
+        const validUsers = data.filter(user => 
+          user?.data?.userInfos?.firstName && user?.data?.userInfos?.lastName
+        );
+
+        console.log("📊 Utilisateurs valides :", validUsers);  // Log des utilisateurs après filtrage
+
+        if (validUsers.length > 0) {
+          setUsers(validUsers.map(user => user.data)); // Met à jour la liste des utilisateurs valides
+          setSelectedUser(String(validUsers[0].data.id)); // Sélectionne le premier utilisateur par défaut
+        } else {
+          console.warn("⚠️ Aucun utilisateur valide trouvé.");
         }
       })
       .catch((err) => {
@@ -59,7 +73,7 @@ const HomePage = () => {
                   {user.userInfos.firstName} {user.userInfos.lastName}
                 </option>
               ) : (
-                <option key={user.id} value={String(user.id)}>
+                <option key={`unknown-${user.id}`} value={String(user.id)}>
                   Utilisateur Inconnu
                 </option>
               )
