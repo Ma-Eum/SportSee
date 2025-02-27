@@ -19,10 +19,20 @@ import "../styles/pages/_profile.scss";
 const Profile = () => {
   const { userId } = useParams();
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     console.log(`🔄 Récupération des données pour userId: ${userId}`);
+
+    // Vérifie si userId est un nombre valide avant de faire l'appel API
+    if (!userId || isNaN(userId)) {
+      console.warn("⚠️ ID utilisateur invalide, affichage de la page 404.");
+      setError(true);
+      setLoading(false);
+      return;
+    }
+
     getUserData(userId)
       .then((data) => {
         if (!data) {
@@ -35,11 +45,24 @@ const Profile = () => {
       .catch((error) => {
         console.error("❌ Erreur récupération utilisateur :", error);
         setError(true);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [userId]);
 
+  // ⛔ Affichage de la page 404 en cas d'erreur
   if (error) {
     return <Page404 />;
+  }
+
+  // ⏳ Affichage du chargement des données
+  if (loading) {
+    return (
+      <DashboardLayout>
+        <p>Chargement des données...</p>
+      </DashboardLayout>
+    );
   }
 
   return (
@@ -47,7 +70,9 @@ const Profile = () => {
       <div className="profile">
         {user ? (
           <>
-            <h1>Bonjour <span className="user-name">{user.userInfos.firstName}</span> !</h1>
+            <h1>
+              Bonjour <span className="user-name">{user.userInfos?.firstName || "Utilisateur inconnu"}</span> !
+            </h1>
             <p className="congrats-message">Félicitations ! Vous avez explosé vos objectifs hier 🎉</p>
 
             <div className="dashboard-container">
@@ -59,16 +84,24 @@ const Profile = () => {
                   <ScoreChart userId={userId} />
                 </div>
               </div>
+
+              {/* 🔥 Ajout des cartes Nutrition */}
               <div className="key-info-container">
-                <NutritionCard type="Calories" value={user.keyData.calorieCount} unit="kCal" icon={caloriesIcon} />
-                <NutritionCard type="Protéines" value={user.keyData.proteinCount} unit="g" icon={proteinIcon} />
-                <NutritionCard type="Glucides" value={user.keyData.carbohydrateCount} unit="g" icon={carbsIcon} />
-                <NutritionCard type="Lipides" value={user.keyData.lipidCount} unit="g" icon={fatIcon} />
+                {user.keyData ? (
+                  <>
+                    <NutritionCard type="Calories" value={user.keyData.calorieCount} unit="kCal" icon={caloriesIcon} />
+                    <NutritionCard type="Protéines" value={user.keyData.proteinCount} unit="g" icon={proteinIcon} />
+                    <NutritionCard type="Glucides" value={user.keyData.carbohydrateCount} unit="g" icon={carbsIcon} />
+                    <NutritionCard type="Lipides" value={user.keyData.lipidCount} unit="g" icon={fatIcon} />
+                  </>
+                ) : (
+                  <p>⚠️ Aucune donnée nutritionnelle disponible.</p>
+                )}
               </div>
             </div>
           </>
         ) : (
-          <p>Chargement des données...</p>
+          <p>❌ Impossible de charger les informations utilisateur.</p>
         )}
       </div>
     </DashboardLayout>

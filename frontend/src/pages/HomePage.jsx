@@ -5,21 +5,29 @@ import { getAllUsers } from "../services/apiService";
 import "../styles/pages/_homePage.scss";
 
 const HomePage = () => {
-  const [users, setUsers] = useState([]); // Stocke la liste des utilisateurs
-  const [selectedUser, setSelectedUser] = useState(""); // Stocke l'utilisateur sélectionné
-  const navigate = useNavigate(); // Permet de naviguer vers le profil sélectionné
+  const [users, setUsers] = useState([]); // Liste des utilisateurs
+  const [selectedUser, setSelectedUser] = useState(""); // Utilisateur sélectionné
+  const navigate = useNavigate(); // Gestion de la navigation
 
   // 🔄 Charge la liste des utilisateurs au chargement de la page
   useEffect(() => {
     getAllUsers()
       .then((data) => {
+        if (!data || data.length === 0) {
+          console.warn("⚠️ Aucune donnée utilisateur disponible.");
+          return;
+        }
+
         console.log("✅ Liste des utilisateurs récupérée :", data);
-        setUsers(data);
-        if (data.length > 0) {
-          setSelectedUser(data[0].id); // Par défaut, sélectionne le premier utilisateur
+        setUsers(data); // Stocke les utilisateurs dans l'état
+
+        if (data[0]?.id) {
+          setSelectedUser(String(data[0].id)); // Sélectionne le premier utilisateur par défaut
         }
       })
-      .catch((err) => console.error("❌ Erreur chargement utilisateurs:", err));
+      .catch((err) => {
+        console.error("❌ Erreur chargement utilisateurs:", err);
+      });
   }, []);
 
   // 🔄 Gestion du changement de sélection
@@ -30,7 +38,7 @@ const HomePage = () => {
   // 🚀 Redirection vers la page du profil sélectionné
   const handleGoToProfile = () => {
     if (selectedUser) {
-      navigate(`/profile/${selectedUser}`);
+      navigate(`/profile/${selectedUser}`); // Redirige vers le profil de l'utilisateur
     }
   };
 
@@ -41,13 +49,23 @@ const HomePage = () => {
 
         {/* 🔽 Sélection d'utilisateur via une liste déroulante */}
         <div className="user-selection">
-          <select value={selectedUser} onChange={handleSelectChange}>
+          <select onChange={handleSelectChange} value={selectedUser} disabled={users.length === 0}>
+            <option key="default" value="" disabled>
+              Sélectionnez un utilisateur
+            </option>
             {users.map((user) => (
-              <option key={user.id} value={user.id}>
-                {user.userInfos?.firstName} {user.userInfos?.lastName}
-              </option>
+              user?.id && user?.userInfos ? (
+                <option key={user.id} value={String(user.id)}>
+                  {user.userInfos.firstName} {user.userInfos.lastName}
+                </option>
+              ) : (
+                <option key={user.id} value={String(user.id)}>
+                  Utilisateur Inconnu
+                </option>
+              )
             ))}
           </select>
+
           <button onClick={handleGoToProfile} disabled={!selectedUser}>
             Voir le profil
           </button>
