@@ -42,6 +42,7 @@ const HomePage = () => {
   // 🚀 Redirection vers la page du profil sélectionné
   const handleGoToProfile = () => {
     if (selectedUser) {
+      console.log("Navigating to profile of userId:", selectedUser); // Log pour vérifier l'ID
       navigate(`/profile/${selectedUser}`); // Redirige vers le profil de l'utilisateur
     }
   };

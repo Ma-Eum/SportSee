@@ -12,7 +12,6 @@ export const getAllUsers = async () => {
   }
 
   try {
-    // Récupérer les utilisateurs depuis l'API backend en utilisant leurs IDs
     const userIds = [12, 18];  // Manuellement ou dynamiquement, il faut savoir quels utilisateurs on a
     const userPromises = userIds.map(async (id) => {
       const response = await fetch(`${API_URL}/user/${id}`);  // Récupérer les informations d'un utilisateur par ID
@@ -22,7 +21,6 @@ export const getAllUsers = async () => {
       return response.json();  // Retourner les données de l'utilisateur
     });
 
-    // Attendre que toutes les requêtes se terminent
     const users = await Promise.all(userPromises);
     console.log("✅ Liste des utilisateurs récupérés depuis le backend : ", users);
     return users.map(user => user.data);  // Retourner les données des utilisateurs
@@ -39,7 +37,6 @@ export const getUserData = async (userId) => {
   }
 
   try {
-    // Récupérer les données d'un utilisateur depuis l'API
     const response = await fetch(`${API_URL}/user/${userId}`);
     if (!response.ok) {
       throw new Error(`Erreur API: Impossible de récupérer les données de l'utilisateur ${userId}`);
@@ -54,24 +51,28 @@ export const getUserData = async (userId) => {
 };
 
 export const getUserActivity = async (userId) => {
-  if (USE_MOCK_DATA) {
-    console.log("🔄 Utilisation des données mockées pour l'activité...");
-    const userActivity = mockData.activity.find(activity => activity.userId === Number(userId))?.sessions || [];
-    return Promise.resolve(userActivity);
-  }
-
-  try {
-    const response = await fetch(`${API_URL}/user/${userId}/activity`);
-    if (!response.ok) {
-      throw new Error("Erreur API: Impossible de récupérer l'activité de l'utilisateur");
+    if (USE_MOCK_DATA) {
+        console.log("🔄 Utilisation des données mockées pour l'activité...");
+        // Recherche dans les données mockées
+        const userActivity = mockData.activity.find(activity => activity.userId === Number(userId));
+        return Promise.resolve(userActivity ? userActivity.sessions : []);
     }
-    const userActivity = await response.json();
-    console.log("✅ Activité de l'utilisateur récupérée : ", userActivity);  // Log détaillé ici
-    return userActivity.sessions || [];
-  } catch (error) {
-    console.error("❌ Erreur de récupération de l'activité utilisateur", error);
-    return [];
-  }
+
+    try {
+        const response = await fetch(`${API_URL}/user/${userId}/activity`);
+        if (!response.ok) {
+            throw new Error("Erreur API: Impossible de récupérer l'activité de l'utilisateur");
+        }
+        const userActivity = await response.json();
+        console.log("✅ Activité de l'utilisateur récupérée : ", userActivity);
+
+        // Vérifier la structure des données renvoyées par l'API
+        // Assurer que les sessions existent dans `data` ou autre clé.
+        return userActivity.sessions || userActivity.data?.sessions || [];
+    } catch (error) {
+        console.error("❌ Erreur de récupération de l'activité utilisateur", error);
+        return [];
+    }
 };
 
 export const getUserPerformance = async (userId) => {
@@ -87,7 +88,7 @@ export const getUserPerformance = async (userId) => {
     }
     const userPerformance = await response.json();
     console.log("✅ Performances de l'utilisateur récupérées : ", userPerformance);
-    return userPerformance.data || [];
+    return userPerformance.data || [];  // Retourne les performances ou un tableau vide
   } catch (error) {
     console.error("❌ Erreur de récupération des performances de l'utilisateur", error);
     return [];
@@ -108,7 +109,7 @@ export const getUserAverageSessions = async (userId) => {
     }
     const userSessions = await response.json();
     console.log("✅ Sessions moyennes de l'utilisateur récupérées : ", userSessions);
-    return userSessions.sessions || [];
+    return userSessions.sessions || [];  // Assurez-vous que les données sont au bon format
   } catch (error) {
     console.error("❌ Erreur de récupération des sessions moyennes de l'utilisateur", error);
     return [];

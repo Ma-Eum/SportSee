@@ -17,7 +17,7 @@ import fatIcon from "../assets/images/fat-icon.png";
 import "../styles/pages/_profile.scss";
 
 const Profile = () => {
-  const { userId } = useParams();
+  const { userId } = useParams(); // Récupération du userId depuis l'URL
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -35,6 +35,7 @@ const Profile = () => {
 
     getUserData(userId)
       .then((data) => {
+        console.log("Données utilisateur récupérées : ", data); // Ajout du log pour debugger
         if (!data) {
           console.warn("⚠️ Utilisateur non trouvé, affichage de la page 404");
           setError(true);

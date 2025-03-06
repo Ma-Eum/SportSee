@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { getUserActivity } from "../services/apiService";
 import "../styles/components/_activityChart.scss"; 
 
-const ActivityChart = ({ userId }) => { // ✅ Ajout du userId en prop
+const ActivityChart = ({ userId }) => { 
     const [data, setData] = useState([]);
 
     useEffect(() => {
@@ -17,11 +17,20 @@ const ActivityChart = ({ userId }) => { // ✅ Ajout du userId en prop
         getUserActivity(userId)
             .then((activityData) => { 
                 if (activityData && activityData.length > 0) {
-                    console.log("✅ Activité récupérée :", activityData);
-                    setData(activityData);
+                    console.log("Données d'activité récupérées:", activityData);
+
+                    // Transformer les données pour s'assurer qu'elles sont au bon format
+                    const formattedData = activityData.map(item => ({
+                        day: item.day,
+                        kilogram: item.kilogram,
+                        calories: item.calories
+                    }));
+
+                    console.log("✅ Activité récupérée :", formattedData);
+                    setData(formattedData);
                 } else {
                     console.error("❌ Aucune donnée d'activité trouvée !");
-                    setData([]);
+                    setData([]); // Si aucune donnée d'activité, on met à jour l'état avec un tableau vide
                 }
             })
             .catch(error => {
@@ -30,14 +39,13 @@ const ActivityChart = ({ userId }) => { // ✅ Ajout du userId en prop
             });
     }, [userId]);
 
-    // ✅ Tooltip personnalisé
     const CustomTooltip = ({ active, payload, coordinate  }) => {
         if (active && payload && payload.length) {
             return (
                 <div className="custom-tooltip"
                     style={{ 
-                        left: `${coordinate.x + 35}px`, // ✅ Ajusté pour s'aligner avec la maquette
-                        top: `-20px`,  // ✅ FIXE verticalement
+                        left: `${coordinate.x + 35}px`, 
+                        top: `-20px` 
                     }}
                 >
                     <p>{`${payload[0].value}kg`}</p>
@@ -47,7 +55,7 @@ const ActivityChart = ({ userId }) => { // ✅ Ajout du userId en prop
         }
         return null;
     };
-    
+
     CustomTooltip.propTypes = {
         active: PropTypes.bool,
         payload: PropTypes.arrayOf(
@@ -63,7 +71,6 @@ const ActivityChart = ({ userId }) => { // ✅ Ajout du userId en prop
 
     return (
         <div className="activity-chart">
-            {/* ✅ Conteneur pour le titre et la légende */}
             <div className="chart-header">
                 <h2>Activité quotidienne</h2>
                 <div className="chart-legend">
@@ -76,42 +83,37 @@ const ActivityChart = ({ userId }) => { // ✅ Ajout du userId en prop
                 </div>
             </div>
 
-            <ResponsiveContainer width="100%" height={260}>
-                <BarChart data={data} barGap={10} barSize={7}>
-                    {/* ✅ Lignes horizontales ajustées */}
-                    <CartesianGrid stroke="#DEDEDE" vertical={false} strokeDasharray="3 3" />
-                    
-                    {/* ✅ Axe X */}
-                    <XAxis 
-                        dataKey="day" 
-                        tick={{ fill: "#74798C" }} 
-                        tickLine={false} 
-                    />
-
-                    {/* ✅ Axe Y droit avec SEULEMENT la médiane et la valeur min */}
-                    <YAxis 
-                        yAxisId="right"
-                        orientation="right"
-                        tick={{ fill: "#74798C" }}
-                        tickLine={false}
-                        axisLine={false}
-                        domain={[50, 300]}  
-                        ticks={[50, 150]} 
-                    />
-
-                    {/* ✅ Tooltip personnalisé */}
-                    <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(196, 196, 196, 0.5)", width: 56 }} />
-
-                    {/* ✅ Barres ajustées */}
-                    <Bar yAxisId="right" dataKey="kilogram" fill="#282D30" radius={[3, 3, 0, 0]} />
-                    <Bar yAxisId="right" dataKey="calories" fill="#E60000" radius={[3, 3, 0, 0]} />
-                </BarChart>
-            </ResponsiveContainer>
+            {/* Si les données sont valides, on affiche le graphique */}
+            {data.length > 0 ? (
+                <ResponsiveContainer width="100%" height={260}>
+                    <BarChart data={data} barGap={10} barSize={7}>
+                        <CartesianGrid stroke="#DEDEDE" vertical={false} strokeDasharray="3 3" />
+                        <XAxis 
+                            dataKey="day" 
+                            tick={{ fill: "#74798C" }} 
+                            tickLine={false} 
+                        />
+                        <YAxis 
+                            yAxisId="right"
+                            orientation="right"
+                            tick={{ fill: "#74798C" }}
+                            tickLine={false}
+                            axisLine={false}
+                            domain={[50, 300]}  
+                            ticks={[50, 150]} 
+                        />
+                        <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(196, 196, 196, 0.5)", width: 56 }} />
+                        <Bar yAxisId="right" dataKey="kilogram" fill="#282D30" radius={[3, 3, 0, 0]} />
+                        <Bar yAxisId="right" dataKey="calories" fill="#E60000" radius={[3, 3, 0, 0]} />
+                    </BarChart>
+                </ResponsiveContainer>
+            ) : (
+                <p>⚠️ Aucune donnée d activité disponible pour cet utilisateur.</p>
+            )}
         </div>
     );
 };
 
-// ✅ Ajout de la vérification des props
 ActivityChart.propTypes = {
     userId: PropTypes.string.isRequired,
 };
