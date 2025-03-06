@@ -35,25 +35,25 @@
     {
       "userId": 12,
       "sessions": [
-        { "day": "1", "kilogram": 80, "calories": 240 },
-        { "day": "2", "kilogram": 80, "calories": 220 },
-        { "day": "3", "kilogram": 81, "calories": 280 },
-        { "day": "4", "kilogram": 81, "calories": 290 },
-        { "day": "5", "kilogram": 80, "calories": 160 },
-        { "day": "6", "kilogram": 80, "calories": 162 },
-        { "day": "7", "kilogram": 79, "calories": 140 }
+        { "day": "2020-07-01", "kilogram": 80, "calories": 240 },
+        { "day": "2020-07-02", "kilogram": 80, "calories": 220 },
+        { "day": "2020-07-03", "kilogram": 81, "calories": 280 },
+        { "day": "2020-07-04", "kilogram": 81, "calories": 290 },
+        { "day": "2020-07-05", "kilogram": 80, "calories": 160 },
+        { "day": "2020-07-06", "kilogram": 80, "calories": 162 },
+        { "day": "2020-07-07", "kilogram": 79, "calories": 140 }
       ]
     },
     {
       "userId": 13,
       "sessions": [
-        { "day": "1", "kilogram": 70, "calories": 220 },
-        { "day": "2", "kilogram": 69, "calories": 250 },
-        { "day": "3", "kilogram": 69, "calories": 230 },
-        { "day": "4", "kilogram": 68, "calories": 270 },
-        { "day": "5", "kilogram": 68, "calories": 180 },
-        { "day": "6", "kilogram": 67, "calories": 190 },
-        { "day": "7", "kilogram": 66, "calories": 170 }
+        { "day": "2020-07-01", "kilogram": 70, "calories": 220 },
+        { "day": "2020-07-02", "kilogram": 69, "calories": 250 },
+        { "day": "2020-07-03", "kilogram": 69, "calories": 230 },
+        { "day": "2020-07-04", "kilogram": 68, "calories": 270 },
+        { "day": "2020-07-05", "kilogram": 68, "calories": 180 },
+        { "day": "2020-07-06", "kilogram": 67, "calories": 190 },
+        { "day": "2020-07-07", "kilogram": 66, "calories": 170 }
       ]
     }
   ],
