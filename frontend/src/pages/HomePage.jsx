@@ -13,7 +13,8 @@ const HomePage = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const data = await getAllUsers();
+        const data = await getAllUsers(); // Fonction qui bascule entre mockData et API
+
         if (!data || data.length === 0) {
           console.warn("⚠️ Aucune donnée utilisateur disponible.");
           return;
@@ -21,12 +22,7 @@ const HomePage = () => {
 
         console.log("✅ Liste des utilisateurs récupérée :", data);
 
-        // Ajoutons un log pour vérifier la structure des données
-        data.forEach((user, index) => {
-          console.log(`Utilisateur ${index + 1}:`, user); // Log de chaque utilisateur pour vérifier sa structure
-        });
-
-        // Mettre à jour l'état des utilisateurs
+        // Mise à jour de la liste des utilisateurs
         setUsers(data);
         // Par défaut, sélectionne le premier utilisateur
         setSelectedUser(String(data[0].id));
@@ -55,6 +51,21 @@ const HomePage = () => {
       <div className="homepage-container">
         <h1>Choisissez un profil</h1>
 
+         {/* 🔽 Affichage des prénoms et âges des utilisateurs */}
+         <div className="user-names">
+          {users.length > 0 ? (
+            users.map((user, index) => (
+              <div key={user.id || index}>
+                {/* Affichage du prénom, nom et âge */}
+                {user?.userInfos?.firstName || `Utilisateur ${index + 1}`}{" "}
+                {user?.userInfos?.lastName || ""} - Age: {user?.userInfos?.age || "Non précisé"}
+              </div>
+            ))
+          ) : (
+            <p>Aucun utilisateur disponible</p>
+          )}
+        </div>
+
         {/* 🔽 Sélection d'utilisateur via une liste déroulante */}
         <div className="user-selection">
           <select onChange={handleSelectChange} value={selectedUser} disabled={users.length === 0}>
@@ -63,7 +74,7 @@ const HomePage = () => {
             </option>
             {users.map((user) => (
               <option key={user.id} value={String(user.id)}>
-                {user.userInfos.firstName} {user.userInfos.lastName}
+                {user?.userInfos?.firstName} {user?.userInfos?.lastName}
               </option>
             ))}
           </select>
