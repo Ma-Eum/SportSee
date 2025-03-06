@@ -1,5 +1,5 @@
 import mockData from "../mocks/mockData.json"; // Import des données mockées
-import { USE_MOCK_DATA, API_BASE_URL } from "../config"; // Configuration
+import { USE_MOCK_DATA , API_BASE_URL} from "../config"; // Configuration
 
 console.log(`🛠️ Mode MockData activé : ${USE_MOCK_DATA}`);
 
@@ -10,62 +10,73 @@ console.log(`🛠️ Mode MockData activé : ${USE_MOCK_DATA}`);
 export const getAllUsers = async () => {
     if (USE_MOCK_DATA) {
         console.log("🔄 Utilisation des utilisateurs mockés...");
-        return Promise.resolve(mockData.users || []);  // Retourne les utilisateurs mockés
+        return Promise.resolve(mockData.users || []); // Retourne les utilisateurs mockés
     }
-
+  
     try {
-        // Vérification de l'URL pour l'API backend
-        console.log(`📡 Tentative de récupération des utilisateurs depuis ${API_BASE_URL}/users`);
+        // Simule la récupération des utilisateurs via le tableau USER_MAIN_DATA
+        const USER_MAIN_DATA = [
+            {
+                id: 12,
+                userInfos: {
+                    firstName: 'Karl',
+                    lastName: 'Dovineau',
+                    age: 31,
+                },
+                todayScore: 0.12,
+                keyData: {
+                    calorieCount: 1930,
+                    proteinCount: 155,
+                    carbohydrateCount: 290,
+                    lipidCount: 50
+                }
+            },
+            {
+                id: 18,
+                userInfos: {
+                    firstName: 'Cecilia',
+                    lastName: 'Ratorez',
+                    age: 34,
+                },
+                score: 0.3,
+                keyData: {
+                    calorieCount: 2500,
+                    proteinCount: 90,
+                    carbohydrateCount: 150,
+                    lipidCount: 120
+                }
+            }
+        ];
 
-        // Exemple d'IDs utilisateurs que l'on récupère depuis l'API
-        const userIds = [12, 18]; // Si le backend expose plusieurs utilisateurs par ID
-        const userRequests = userIds.map((id) =>
-            fetch(`${API_BASE_URL}/user/${id}`)
-                .then((res) => {
-                    if (!res.ok) {
-                        console.error(`❌ Erreur API ${res.status}: ${res.statusText}`);
-                        return null; // Si la requête échoue, retourne null
-                    }
-                    return res.json();
-                })
-        );
-
-        // Attente des résultats de toutes les requêtes
-        const users = await Promise.all(userRequests);
-        return users.filter((user) => user !== null); // Retourne les utilisateurs valides
+        console.log("✅ Utilisateurs récupérés : ", USER_MAIN_DATA);
+        return USER_MAIN_DATA; // Retourne tous les utilisateurs
     } catch (error) {
-        console.error("❌ Erreur API ou récupération de données utilisateur échouée. Passage aux données mockées.");
-        console.error(error); // Affiche l'erreur complète pour le debug
-        return mockData.users; // Retourne les données mockées en cas d'erreur d'API
+        console.error("❌ Erreur de récupération des utilisateurs", error);
+        return []; // Retourne un tableau vide en cas d'erreur
     }
 };
-
-/**
- * Récupère les informations d'un utilisateur (API ou Mock)
- * @param {string} userId
- * @returns {Promise<Object>}
- */
-export const getUserData = async (userId) => {
+  
+  /**
+   * Récupère les informations d'un utilisateur (API ou Mock)
+   * @param {string} userId
+   * @returns {Promise<Object>}
+   */
+  export const getUserData = async (userId) => {
     if (USE_MOCK_DATA) {
-        console.log("🔄 Utilisation des données mockées...");
-        return Promise.resolve(
-            mockData.users.find(user => user.id === Number(userId)) || null
-        );  // Recherche d'un utilisateur dans les données mockées
+      console.log("🔄 Utilisation des données mockées...");
+      return Promise.resolve(mockData.users.find(user => user.id === Number(userId)) || null);
     }
-
+  
     try {
-        console.log(`📡 Tentative de récupération des données utilisateur: ${API_BASE_URL}/user/${userId}`);
-        const response = await fetch(`${API_BASE_URL}/user/${userId}`);
-
-        if (!response.ok) throw new Error(`Erreur lors de la récupération des données de l'utilisateur ${userId}`);
-
-        const userData = await response.json();
-        return userData;  // Retourne les données utilisateur
+      const response = await fetch(`${API_BASE_URL}/user/${userId}`);
+      if (!response.ok) throw new Error(`Erreur lors de la récupération des données de l'utilisateur ${userId}`);
+      const userData = await response.json();
+      return userData; // Retourne les données utilisateur
     } catch (error) {
-        console.error("❌ Erreur API :", error);
-        return null;
+      console.error("❌ Erreur API :", error);
+      return null;
     }
-};
+  };
 
 /**
  * Récupère l'activité quotidienne d'un utilisateur (API ou Mock)

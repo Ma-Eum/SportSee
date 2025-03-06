@@ -9,16 +9,26 @@ const PerformanceChart = ({ userId }) => {
 
     useEffect(() => {
         if (!userId) return;
-        console.log(`🔄 Récupération des performances pour userId: ${userId}`);
+
         getUserPerformance(userId)
-            .then((data) => setPerformance(data))
-            .catch((error) => console.error("❌ Erreur récupération performances :", error));
-    }, [userId]);
+          .then((performanceData) => {
+            console.log("Données de performance :", performanceData); // Ajoute un log pour vérifier la structure
+            if (performanceData && performanceData.data && Array.isArray(performanceData.data)) {
+              setPerformance(performanceData);
+            } else {
+              console.error("❌ Données de performance invalides !");
+              setPerformance(null);
+            }
+          })
+          .catch((error) => {
+            console.error("❌ Erreur récupération des performances :", error);
+            setPerformance(null);
+          });
+      }, [userId]);
 
     if (!performance) return <p>Chargement...</p>;
 
     const categories = performance.kind;
-
     const formattedData = performance.data.map(item => ({
         subject: categories[item.kind],
         value: item.value
@@ -39,6 +49,7 @@ const PerformanceChart = ({ userId }) => {
         </div>
     );
 };
+
 
 PerformanceChart.propTypes = {
     userId: PropTypes.string.isRequired,

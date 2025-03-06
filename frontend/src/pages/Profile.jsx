@@ -77,11 +77,12 @@ const Profile = () => {
 
             <div className="dashboard-container">
               <div className="charts-container">
-                <ActivityChart userId={userId} />
+                {/* Passer les données de `userId` et `user` à chaque graphique */}
+                <ActivityChart userId={userId} user={user} />
                 <div className="charts-bottom">
-                  <AverageSessionsChart userId={userId} />
-                  <PerformanceChart userId={userId} />
-                  <ScoreChart userId={userId} />
+                  <AverageSessionsChart userId={userId} user={user} />
+                  <PerformanceChart userId={userId} user={user} />
+                  <ScoreChart userId={userId} user={user} />
                 </div>
               </div>
 

@@ -40,22 +40,23 @@ const AverageSessionsChart = ({ userId }) => {
 
     useEffect(() => {
         if (!userId) return;
-        console.log(`🔄 Récupération des sessions moyennes pour userId: ${userId}`);
+    
         getUserAverageSessions(userId)
-            .then((sessionData) => {
-                if (sessionData && sessionData.length > 0) {
-                    console.log("✅ Sessions moyennes récupérées :", sessionData);
-                    setData(sessionData);
-                } else {
-                    console.error("❌ Aucune session moyenne trouvée !");
-                    setData([]);
-                }
-            })
-            .catch(error => {
-                console.error("❌ Erreur récupération sessions moyennes :", error);
-                setData([]);
-            });
+          .then((sessionData) => {
+            console.log("Données des sessions moyennes :", sessionData);  // Log des données récupérées
+            if (sessionData && Array.isArray(sessionData) && sessionData.length > 0) {
+              setData(sessionData);
+            } else {
+              console.error("❌ Aucune session moyenne trouvée !");
+              setData([]);
+            }
+          })
+          .catch((error) => {
+            console.error("❌ Erreur récupération sessions moyennes :", error);
+            setData([]);
+          });
     }, [userId]);
+    
 
     return (
         <div className={`average-sessions-chart ${hoverIndex !== null ? `active-${hoverIndex}` : ""}`}>
@@ -79,8 +80,6 @@ const AverageSessionsChart = ({ userId }) => {
                         interval="preserveStartEnd"
                     />
                     <Tooltip content={<CustomTooltip />} cursor={false} />
-                    
-                    {/** 🎯 Génération dynamique de la ligne avec opacité évolutive **/}
                     {data.map((point, index) => (
                         <Line
                             key={index}
