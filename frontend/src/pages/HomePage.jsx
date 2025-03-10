@@ -52,21 +52,6 @@ const HomePage = () => {
       <div className="homepage-container">
         <h1>Choisissez un profil</h1>
 
-         {/* 🔽 Affichage des prénoms et âges des utilisateurs */}
-         <div className="user-names">
-          {users.length > 0 ? (
-            users.map((user, index) => (
-              <div key={user.id || index}>
-                {/* Affichage du prénom, nom et âge */}
-                {user?.userInfos?.firstName || `Utilisateur ${index + 1}`}{" "}
-                {user?.userInfos?.lastName || ""} - Age: {user?.userInfos?.age || "Non précisé"}
-              </div>
-            ))
-          ) : (
-            <p>Aucun utilisateur disponible</p>
-          )}
-        </div>
-
         {/* 🔽 Sélection d'utilisateur via une liste déroulante */}
         <div className="user-selection">
           <select onChange={handleSelectChange} value={selectedUser} disabled={users.length === 0}>
