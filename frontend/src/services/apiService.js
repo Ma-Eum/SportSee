@@ -96,22 +96,30 @@ export const getUserPerformance = async (userId) => {
 };
 
 export const getUserAverageSessions = async (userId) => {
-  if (USE_MOCK_DATA) {
-    console.log("🔄 Utilisation des sessions moyennes mockées...");
-    const userSessions = mockData.averageSessions.find(session => session.userId === Number(userId))?.sessions || [];
-    return Promise.resolve(userSessions);
-  }
-
-  try {
-    const response = await fetch(`${API_URL}/user/${userId}/average-sessions`);
-    if (!response.ok) {
-      throw new Error("Erreur API: Impossible de récupérer les sessions moyennes de l'utilisateur");
+    if (USE_MOCK_DATA) {
+      console.log("🔄 Utilisation des sessions moyennes mockées...");
+      
+      // Adaptation des données dans MockData
+      const userSessions = mockData.averageSessions.find(session => session.userId === Number(userId));
+      const sessions = userSessions ? userSessions.sessions : [];
+      
+      console.log("✅ Sessions moyennes récupérées (MockData) : ", sessions);
+      return Promise.resolve(sessions);  // Retourne directement les sessions
     }
-    const userSessions = await response.json();
-    console.log("✅ Sessions moyennes de l'utilisateur récupérées : ", userSessions);
-    return userSessions.sessions || [];  // Assurez-vous que les données sont au bon format
-  } catch (error) {
-    console.error("❌ Erreur de récupération des sessions moyennes de l'utilisateur", error);
-    return [];
-  }
-};
+  
+    try {
+      const response = await fetch(`${API_URL}/user/${userId}/average-sessions`);
+      if (!response.ok) {
+        throw new Error("Erreur API: Impossible de récupérer les sessions moyennes de l'utilisateur");
+      }
+      const userSessions = await response.json();
+      
+      console.log("✅ Sessions moyennes récupérées : ", userSessions);
+      
+      // Accéder à la clé 'sessions' dans 'data' pour le backend
+      return userSessions.data ? userSessions.data.sessions : [];
+    } catch (error) {
+      console.error("❌ Erreur de récupération des sessions moyennes de l'utilisateur", error);
+      return [];
+    }
+  };  
