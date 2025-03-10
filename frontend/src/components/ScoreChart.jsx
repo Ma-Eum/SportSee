@@ -9,13 +9,36 @@ const ScoreChart = ({ userId }) => {
 
     useEffect(() => {
         if (!userId) return;
+
         console.log(`🔄 Récupération du score pour userId: ${userId}`);
+
         getUserData(userId)
-            .then((data) => setScore(data.todayScore * 100))
-            .catch((error) => console.error("❌ Erreur récupération score :", error));
+            .then((data) => {
+                console.log("Données utilisateur récupérées pour userId " + userId, data); // Log des données
+
+                // Vérification de la présence de 'todayScore' ou 'score' dans les données
+                if (data) {
+                    const todayScore = data.todayScore || data.score; // On vérifie les deux possibilités
+
+                    if (typeof todayScore === 'number') {
+                        const calculatedScore = todayScore * 100;  // Multiplie par 100 pour obtenir le pourcentage
+                        setScore(calculatedScore);  // On utilise la donnée 'todayScore' ou 'score'
+                    } else {
+                        console.error(`❌ Le score de l'utilisateur ${userId} n'est pas valide`);
+                        setScore(0);  // Si le score n'est pas valide, mettre la valeur à 0
+                    }
+                } else {
+                    console.error(`❌ Aucune donnée trouvée pour l'utilisateur ${userId}`);
+                    setScore(0);  // En cas d'erreur, mettre le score à 0
+                }
+            })
+            .catch((error) => {
+                console.error("❌ Erreur récupération score pour userId " + userId, error);
+                setScore(0);  // En cas d'erreur, mettre le score à 0
+            });
     }, [userId]);
 
-    if (score === null) return <p>Chargement...</p>;
+    if (score === null) return <p>Chargement...</p>;  // Afficher "Chargement..." si le score n'est pas encore défini
 
     const data = [
         { name: "Score", value: score },
@@ -49,7 +72,7 @@ const ScoreChart = ({ userId }) => {
                     </PieChart>
                 </ResponsiveContainer>
                 <div className="score-center">
-                    <p className="score-percentage">{score}%</p>
+                    <p className="score-percentage">{score.toFixed(0)}%</p> {/* Affichage du score avec 0 décimale */}
                     <p className="score-label">
                         de votre <br /> objectif
                     </p>
