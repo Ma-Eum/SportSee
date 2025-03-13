@@ -79,7 +79,27 @@
         pointer-events: none !important; // 🔥 Empêche d'interagir avec le curseur
     }
 
-    
+    /* ✅ Applique la couleur de la ligne de l'axe avec la variable */
+    .recharts-cartesian-axis-line {
+        stroke: $gray-ultralight;  // Applique la couleur définie dans la variable
+    }
+
+    /* ✅ Applique la couleur des textes des ticks de l'axe avec la variable */
+    .recharts-cartesian-axis-tick-value {
+        fill: $gray-libelle;  // Applique la couleur des ticks avec la variable définie
+    }
+
+    /* ✅ Masquer l'axe Y gauche des calories (si nécessaire) */
+    .recharts-cartesian-axis-left {
+        display: none;
+    }
+
+    /* ✅ Masquer la première ligne horizontale dans le graphique */
+    .recharts-cartesian-grid-horizontal line:first-of-type {
+        display: none;  /* Masque la première ligne */
+    }
+
+
     .recharts-responsive-container {
         width: 100%;
         height: 100%;
