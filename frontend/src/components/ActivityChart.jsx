@@ -8,9 +8,7 @@ import "../styles/components/_activityChart.scss";
 
 const ActivityChart = ({ userId }) => { // ✅ Ajout du userId en prop
     const [data, setData] = useState([]);
-    const [minValue, setMinValue] = useState(null);
-    const [medianValue, setMedianValue] = useState(null);
-    const [maxValue, setMaxValue] = useState(null);
+    const [ticks, setTicks] = useState([]);
 
     useEffect(() => {
         if (!userId) return;
@@ -21,10 +19,10 @@ const ActivityChart = ({ userId }) => { // ✅ Ajout du userId en prop
             .then((activityData) => { 
                 if (activityData && activityData.length > 0) {
                     console.log("✅ Activité récupérée :", activityData);
-                    // Nous allons transformer le champ 'day' en un numéro (1, 2, 3, ...)
+// Nous allons transformer le champ 'day' en un numéro (1, 2, 3, ...)
                     const transformedData = activityData.map((item, index) => ({
                         ...item,
-                        day: index + 1 // Assigne 1, 2, 3... pour chaque jour
+                        day: index + 1 // Assigne 1, 2, 3... pour chaque jour 
                     }));
                     setData(transformedData);
 
@@ -32,12 +30,14 @@ const ActivityChart = ({ userId }) => { // ✅ Ajout du userId en prop
                     const kilograms = activityData.map(item => item.kilogram);
                     const minKilogram = Math.min(...kilograms);
                     const maxKilogram = Math.max(...kilograms);
-                    const medianKilogram = Math.round((minKilogram + maxKilogram) / 2);
+                    const medianKilogram = Math.round((minKilogram + maxKilogram) / 2); 
 
-                    // Mise à jour des valeurs dans les états
-                    setMinValue(minKilogram);
-                    setMedianValue(medianKilogram);
-                    setMaxValue(maxKilogram);
+                    // ✅ Création d'un tableau de 4 ticks : Min-1, Min, Médiane, Max+2
+                    const roundedTicks = [minKilogram - 1, medianKilogram, maxKilogram + 4];
+                    
+                    setTicks(roundedTicks);
+
+                    console.log("✅ Ticks alignés :", roundedTicks);
                 } else {
                     console.error("❌ Aucune donnée d'activité trouvée !");
                     setData([]);
@@ -49,40 +49,8 @@ const ActivityChart = ({ userId }) => { // ✅ Ajout du userId en prop
             });
     }, [userId]);
 
-    // ✅ Tooltip personnalisé
-    const CustomTooltip = ({ active, payload, coordinate  }) => {
-        if (active && payload && payload.length) {
-            return (
-                <div className="custom-tooltip"
-                    style={{ 
-                        left: `${coordinate.x + 35}px`, // ✅ Ajusté pour s'aligner avec la maquette
-                        top: `-20px`,  // ✅ FIXE verticalement
-                    }}
-                >
-                    <p>{`${payload[0].value}kg`}</p>
-                    <p>{`${payload[1].value}Kcal`}</p>
-                </div>
-            );
-        }
-        return null;
-    };
-    
-    CustomTooltip.propTypes = {
-        active: PropTypes.bool,
-        payload: PropTypes.arrayOf(
-            PropTypes.shape({
-                value: PropTypes.number,
-            })
-        ),
-        coordinate: PropTypes.shape({
-            x: PropTypes.number,
-            y: PropTypes.number
-        })
-    };
-
     return (
         <div className="activity-chart">
-            {/* ✅ Conteneur pour le titre et la légende */}
             <div className="chart-header">
                 <h2>Activité quotidienne</h2>
                 <div className="chart-legend">
@@ -95,50 +63,45 @@ const ActivityChart = ({ userId }) => { // ✅ Ajout du userId en prop
                 </div>
             </div>
 
-            <ResponsiveContainer width="100%" height={260}>
-                <BarChart data={data} barGap={10} barSize={7}>
-                    {/* ✅ Lignes horizontales ajustées */}
+            <ResponsiveContainer width="100%" height={280}>
+                <BarChart data={data} barGap={10} barSize={7} barCategoryGap={5}>
                     <CartesianGrid stroke="#DEDEDE" vertical={false} strokeDasharray="3 3" />
-                    
-                    {/* ✅ Axe X modifié pour afficher des chiffres */}
+
                     <XAxis 
-                        dataKey="day"  // Le jour transformé en chiffre
+                        dataKey="day"  
                         tick={{ fill: "#74798C" }} 
                         tickLine={false} 
                     />
 
-                    {/* ✅ Axe Y gauche pour les calories - caché avec display: none */}
-                    <YAxis 
-                        yAxisId="left"
-                        orientation="left"
-                        tick={{ fill: "#74798C" }}
-                        tickLine={false}
-                        axisLine={false}
-                        domain={[50, 300]}  
-                        ticks={[50, 150]} 
-                        style={{ display: 'none' }}  // Masquer cet axe
-                    />
-
-                    {/* ✅ Axe Y droit pour le poids (kg) */}
+                    {/* ✅ Axe Y pour le poids avec 3 ticks (Min-1,  Médiane, Max+4) */}
                     <YAxis 
                         yAxisId="right"
                         orientation="right"
                         tick={{ fill: "#74798C" }}
                         tickLine={false}
                         axisLine={false}
-                        domain={[minValue - 5, maxValue]}  // Domaine dynamique basé sur min et max du poids
-                        ticks={[minValue, medianValue, maxValue+1]} // Affiche 3 ticks : min, médian, max
-                        
+                        domain={[ticks[0], ticks[3]]} 
+                        ticks={ticks}  // ✅ Correction pour 4 ticks bien alignés
+                        interval={0}  
+                        allowDecimals={false}
                     />
 
-                    {/* ✅ Tooltip personnalisé */}
-                    <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(196, 196, 196, 0.5)", width: 56 }} />
+                    {/* ✅ Axe Y pour les calories - avec une échelle réduite */}
+                    <YAxis 
+                        yAxisId="left"
+                        orientation="left"
+                        tick={{ fill: "transparent" }} 
+                        tickLine={false}
+                        axisLine={false}
+                        domain={[0, 'auto']}  
+                        style={{ display: 'none' }}  
+                    />
 
-                    {/* ✅ Barres ajustées pour le poids (kg) */}
+                    <Tooltip cursor={{ fill: "rgba(196, 196, 196, 0.5)", width: 56 }} />
+
+                    {/* ✅ Barres ajustées avec le bon yAxisId */}
                     <Bar yAxisId="right" dataKey="kilogram" fill="#282D30" radius={[3, 3, 0, 0]} />
-
-                    {/* ✅ Barres ajustées pour les calories avec échelle réduite */}
-                    <Bar yAxisId="left" dataKey="calories" fill="#E60000" radius={[3, 3, 0, 0]} scale="linear" />
+                    <Bar yAxisId="left" dataKey="calories" fill="#E60000" radius={[3, 3, 0, 0]} />
                 </BarChart>
             </ResponsiveContainer>
         </div>
