@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { getUserActivity } from "../services/apiService";
 import "../styles/components/_activityChart.scss"; 
 
-const ActivityChart = ({ userId }) => { // ✅ Ajout du userId en prop
+const ActivityChart = ({ userId }) => { 
     const [data, setData] = useState([]);
     const [ticks, setTicks] = useState([]);
 
@@ -19,21 +19,21 @@ const ActivityChart = ({ userId }) => { // ✅ Ajout du userId en prop
             .then((activityData) => { 
                 if (activityData && activityData.length > 0) {
                     console.log("✅ Activité récupérée :", activityData);
-// Nous allons transformer le champ 'day' en un numéro (1, 2, 3, ...)
+
                     const transformedData = activityData.map((item, index) => ({
                         ...item,
-                        day: index + 1 // Assigne 1, 2, 3... pour chaque jour 
+                        day: index + 1 
                     }));
                     setData(transformedData);
 
-                    // Calcul des valeurs min, médiane, max pour le poids (kilogram)
+                    // ✅ Calcul des valeurs min, médiane et max du poids
                     const kilograms = activityData.map(item => item.kilogram);
                     const minKilogram = Math.min(...kilograms);
                     const maxKilogram = Math.max(...kilograms);
                     const medianKilogram = Math.round((minKilogram + maxKilogram) / 2); 
 
-                    // ✅ Création d'un tableau de 4 ticks : Min-1, Min, Médiane, Max+2
-                    const roundedTicks = [minKilogram - 1, medianKilogram, maxKilogram + 4];
+                    // ✅ Création d'un tableau de 3 ticks : Min-1, Médiane, Max+5
+                    const roundedTicks = [minKilogram - 1, medianKilogram, maxKilogram + 5];
                     
                     setTicks(roundedTicks);
 
@@ -45,7 +45,7 @@ const ActivityChart = ({ userId }) => { // ✅ Ajout du userId en prop
             })
             .catch(error => {
                 console.error("❌ Erreur récupération activité :", error);
-                setData([]); // Assure que le composant ne plante pas
+                setData([]);
             });
     }, [userId]);
 
@@ -63,25 +63,31 @@ const ActivityChart = ({ userId }) => { // ✅ Ajout du userId en prop
                 </div>
             </div>
 
-            <ResponsiveContainer width="100%" height={280}>
-                <BarChart data={data} barGap={10} barSize={7} barCategoryGap={5}>
+            <ResponsiveContainer width="100%" height={300}>  
+                <BarChart 
+                    data={data} 
+                    barGap={10} 
+                    barSize={7} 
+                    barCategoryGap={5} 
+                    margin={{ top: 30 }}  // ✅ Ajout d'une marge en haut
+                >
                     <CartesianGrid stroke="#DEDEDE" vertical={false} strokeDasharray="3 3" />
 
                     <XAxis 
                         dataKey="day"  
-                        tick={{ fill: "#74798C" }} 
+                        tick={{ fill: "#74798C", dy: 10 }} // ✅ Ajout d'un espace sous les labels de X
                         tickLine={false} 
                     />
 
-                    {/* ✅ Axe Y pour le poids avec 3 ticks (Min-1,  Médiane, Max+4) */}
+                    {/* ✅ Axe Y pour le poids avec 3 ticks (Min-1, Médiane, Max+5) */}
                     <YAxis 
                         yAxisId="right"
                         orientation="right"
-                        tick={{ fill: "#74798C" }}
+                        tick={{ fill: "#74798C", dx: 10 }} // ✅ Ajout d'un espace à droite des labels de Y
                         tickLine={false}
                         axisLine={false}
-                        domain={[ticks[0], ticks[3]]} 
-                        ticks={ticks}  // ✅ Correction pour 4 ticks bien alignés
+                        domain={[ticks[0], ticks[2]]}  // ✅ Ajusté avec Min-1 et Max+5
+                        ticks={ticks}  
                         interval={0}  
                         allowDecimals={false}
                     />
@@ -108,7 +114,6 @@ const ActivityChart = ({ userId }) => { // ✅ Ajout du userId en prop
     );
 };
 
-// ✅ Ajout de la vérification des props
 ActivityChart.propTypes = {
     userId: PropTypes.string.isRequired,
 };
