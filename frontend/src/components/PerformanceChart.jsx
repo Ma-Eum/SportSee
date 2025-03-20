@@ -11,26 +11,36 @@ const PerformanceChart = ({ userId }) => {
         if (!userId) return;
 
         getUserPerformance(userId)
-          .then((performanceData) => {
-            console.log("Données de performance :", performanceData); // Ajoute un log pour vérifier la structure
-            if (performanceData && performanceData.data && Array.isArray(performanceData.data)) {
-              setPerformance(performanceData);
-            } else {
-              console.error("❌ Données de performance invalides !");
-              setPerformance(null);
-            }
-          })
-          .catch((error) => {
-            console.error("❌ Erreur récupération des performances :", error);
-            setPerformance(null);
-          });
-      }, [userId]);
+            .then((performanceData) => {
+                console.log("✅ Données de performance :", performanceData);
+                if (performanceData && performanceData.data && Array.isArray(performanceData.data)) {
+                    setPerformance(performanceData);
+                } else {
+                    console.error("❌ Données de performance invalides !");
+                    setPerformance(null);
+                }
+            })
+            .catch((error) => {
+                console.error("❌ Erreur récupération des performances :", error);
+                setPerformance(null);
+            });
+    }, [userId]);
 
     if (!performance) return <p>Chargement...</p>;
 
-    const categories = performance.kind;
+    // ✅ Correction : Traduire les catégories en texte clair
+    const categoryLabels = {
+        1: "Intensité",
+        2: "Vitesse",
+        3: "Force",
+        4: "Endurance",
+        5: "Énergie",
+        6: "Cardio",
+    };
+
+    // ✅ Corriger le mapping des données pour éviter [object Object]
     const formattedData = performance.data.map(item => ({
-        subject: categories[item.kind],
+        subject: categoryLabels[item.kind] || "Inconnu",
         value: item.value
     }));
 
@@ -38,18 +48,27 @@ const PerformanceChart = ({ userId }) => {
         <div className="performance-chart">
             <ResponsiveContainer width="100%" height={263}>
                 <RadarChart outerRadius="65%" data={formattedData}>
-                    <PolarGrid />
+                    <PolarGrid stroke="rgba(255, 255, 255, 0.3)" />
+
                     <PolarAngleAxis 
                         dataKey="subject"
-                        tick={{ fill: "white", fontSize: 12 }}
+                        tick={{ fill: "white", fontSize: 13, fontWeight: 500 }}
+                        tickSize={15} // ✅ Ajoute de l'espace entre les libellés et le graphique
                     />
-                    <Radar name="Performance" dataKey="value" stroke="#FF0000" fill="#FF0000" fillOpacity={0.6} />
+
+                    {/* ✅ Correction du fillOpacity */}
+                    <Radar 
+                        name="Performance"
+                        dataKey="value"
+                        stroke="#FF0101"
+                        fill="#FF0101"
+                        fillOpacity={0.7} 
+                    />
                 </RadarChart>
             </ResponsiveContainer>
         </div>
     );
 };
-
 
 PerformanceChart.propTypes = {
     userId: PropTypes.string.isRequired,
