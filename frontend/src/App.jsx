@@ -1,18 +1,13 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import Profile from "./pages/Profile";
-import Page404 from "./pages/404"; // Changement du nom pour correspondre
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./router";
 
-function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/profile/:userId" element={<Profile />} />
-        <Route path="*" element={<Page404 />} /> {/* Capture les erreurs de navigation */}
-      </Routes>
-    </Router>
-  );
-}
+import "./index.css";
+import "./styles/main.scss";
 
-export default App;
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
+);
