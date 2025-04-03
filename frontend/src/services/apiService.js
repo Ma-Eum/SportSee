@@ -5,6 +5,11 @@ const API_URL = "http://localhost:3000"; // L'URL de ton API
 
 console.log(`🛠️ Mode MockData activé : ${USE_MOCK_DATA}`);
 
+/**
+ * Récupère tous les utilisateurs depuis l'API ou les données mockées.
+ * @returns {Promise<Array<Object>>} Liste des utilisateurs
+ */
+
 export const getAllUsers = async () => {
   if (USE_MOCK_DATA) {
     console.log("🔄 Utilisation des utilisateurs mockés...");
@@ -30,6 +35,11 @@ export const getAllUsers = async () => {
   }
 };
 
+/**
+ * Récupère les données d'un utilisateur (infos de base).
+ * @param {string|number} userId - L'identifiant de l'utilisateur
+ * @returns {Promise<Object|null>} Données utilisateur ou null
+ */
 export const getUserData = async (userId) => {
   if (USE_MOCK_DATA) {
     console.log("🔄 Utilisation des données mockées...");
@@ -50,6 +60,11 @@ export const getUserData = async (userId) => {
   }
 };
 
+/**
+ * Récupère l'activité physique d'un utilisateur.
+ * @param {string|number} userId - L'identifiant de l'utilisateur
+ * @returns {Promise<Array>} Liste des sessions d'activité
+ */
 export const getUserActivity = async (userId) => {
     if (USE_MOCK_DATA) {
         console.log("🔄 Utilisation des données mockées pour l'activité...");
@@ -75,6 +90,11 @@ export const getUserActivity = async (userId) => {
     }
 };
 
+/**
+ * Récupère les performances sportives d'un utilisateur.
+ * @param {string|number} userId - L'identifiant de l'utilisateur
+ * @returns {Promise<Object|null>} Données de performance
+ */
 export const getUserPerformance = async (userId) => {
   if (USE_MOCK_DATA) {
     console.log("🔄 Utilisation des données mockées pour la performance...");
@@ -95,6 +115,11 @@ export const getUserPerformance = async (userId) => {
   }
 };
 
+/**
+ * Récupère les sessions moyennes (durée) d’un utilisateur.
+ * @param {string|number} userId - L'identifiant de l'utilisateur
+ * @returns {Promise<Array>} Liste des sessions moyennes
+ */
 export const getUserAverageSessions = async (userId) => {
     if (USE_MOCK_DATA) {
       console.log("🔄 Utilisation des sessions moyennes mockées...");
